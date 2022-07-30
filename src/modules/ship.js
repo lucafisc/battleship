@@ -1,9 +1,18 @@
-export const shipFactory = (length, whereHit, sunk) => {
-  const hit = (n) => {
-    console.log("hit");
-  };
+export const ship = (name, length) => {
+  let sunk = false;
+  let whereHit = new Array(length).fill(false);
   const isSunk = () => {
-    console.log("sunk");
+    return whereHit.every(wasHit);
   };
-  return { length, whereHit, sunk };
+  const hit = (n) => {
+    whereHit.fill(true, n, n + 1);
+  };
+  return {
+    isSunk,
+    hit,
+  };
 };
+
+function wasHit(position) {
+  return position === true;
+}
