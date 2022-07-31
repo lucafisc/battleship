@@ -1,34 +1,40 @@
-
 export const gameboard = () => {
+  let board = newBoard();
+  const getBoard = () => {
+    return board;
+  };
 
-  let columnA = new Array(10).fill("");
+  const placeShip = (column, row) => {
+    console.log("placed!");
+  };
 
+  const receiveAttack = (column, row) => {
+    board[column][row]["hit"] = true;
+  };
 
-    let coordinates = 
-  const receiveAttack = () => {};
   return {
     receiveAttack,
+    getBoard,
   };
 };
 
+function newBoard() {
+  let cell = {
+    hit: false,
+    ship: false,
+  };
 
+  const emptyColumn = Array.from(Array(10)).map((e, i) => i);
+  let column = {};
+  emptyColumn.forEach((element, index) => {
+    column[element] = Object.assign({}, cell);
+  });
 
-const cell = {
-  hit: false,
-  ship: false,
+  const alpha = Array.from(Array(10)).map((e, i) => i + 65);
+  const alphabet = alpha.map((x) => String.fromCharCode(x));
+  const board = {};
+  alphabet.forEach((element, index) => {
+    board[element] = JSON.parse(JSON.stringify(column));
+  });
+  return board;
 }
-
-let column = new Array(10);
-let columnObject = {};
-
-column.forEach((element, index) => {columnObject[element] = cell})
-console.log(columnObject);
-
-const alpha = Array.from(Array(26)).map((e, i) => i + 65);
-const alphabet = alpha.map((x) => String.fromCharCode(x));
-
-const gameboard = {};
-
-alphabet.forEach((element, index) => { gameboard[element] = columnObject })
-
-console.log(gameboard)
