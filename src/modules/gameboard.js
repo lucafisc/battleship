@@ -1,10 +1,14 @@
+import { ship } from "../modules/ship";
+
 export const gameboard = () => {
   let board = newBoard();
   const getBoard = () => {
     return board;
   };
 
-  const placeShip = (column, row) => {
+  const placeShip = (column, row, shipName) => {
+    const newShip = ship(shipName, 5);
+
     console.log("placed!");
   };
 
@@ -15,6 +19,7 @@ export const gameboard = () => {
   return {
     receiveAttack,
     getBoard,
+    placeShip,
   };
 };
 
