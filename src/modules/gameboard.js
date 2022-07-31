@@ -6,10 +6,14 @@ export const gameboard = () => {
     return board;
   };
 
-  const placeShip = (column, row, shipName) => {
-    const newShip = ship(shipName, 5);
+  const placeShip = (orientation, shipName, column, row) => {
+    const newShip = ship(shipName);
+    const shipLength = newShip.getLength();
 
-    console.log("placed!");
+    for (let i = 0; i < shipLength; i++) {
+      board[column][row]["ship"] = true;
+      row += 1;
+    }
   };
 
   const receiveAttack = (column, row) => {

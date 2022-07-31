@@ -8,12 +8,11 @@ test("test receive attack", () => {
   expect(board["G"]["4"]["hit"]).toBeFalsy();
 });
 
-test("place ships", () => {
+test("place ships vertically", () => {
   let myBoard = gameboard();
-  myBoard.placeShip("vertical", "destroyer", "B", "3");
+  const shipName = "destroyer";
+  myBoard.placeShip("vertical", shipName, "B", 3);
   let board = myBoard.getBoard();
-  console.log(board["B"]["2"]["ship"]);
-  console.log(board["B"]["3"]["ship"]);
 
   expect(board["B"]["2"]["ship"]).toBeFalsy();
   expect(board["B"]["3"]["ship"]).toBeTruthy();
@@ -22,13 +21,13 @@ test("place ships", () => {
   expect(board["B"]["6"]["ship"]).toBeFalsy();
 });
 
-test("place ships", () => {
-  let myBoard = gameboard();
-  myBoard.placeShip("horizontal", "battleship", "F", "7");
-  let board = myBoard.getBoard();
-  expect(board["E"]["7"]["ship"]).toBeFalsy();
-  expect(board["F"]["7"]["ship"]).toBeTruthy();
-  expect(board["G"]["7"]["ship"]).toBeTruthy();
-  expect(board["H"]["7"]["ship"]).toBeTruthy();
-  expect(board["I"]["7"]["ship"]).toBeFalsy();
-});
+// test("place ships horizontally", () => {
+//   let myBoard = gameboard();
+//   myBoard.placeShip("horizontal", "battleship", "F", "7");
+//   let board = myBoard.getBoard();
+//   expect(board["E"]["7"]["ship"]).toBeFalsy();
+//   expect(board["F"]["7"]["ship"]).toBeTruthy();
+//   expect(board["G"]["7"]["ship"]).toBeTruthy();
+//   expect(board["H"]["7"]["ship"]).toBeTruthy();
+//   expect(board["I"]["7"]["ship"]).toBeFalsy();
+// });

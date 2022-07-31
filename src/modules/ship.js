@@ -1,6 +1,9 @@
 export const ship = (name) => {
   let sunk = false;
-  const length = getLength(name);
+  const length = lengthByName(name);
+  const getLength = () => {
+    return length;
+  };
   let whereHit = new Array(length).fill(false);
   const hit = (n) => {
     whereHit.fill(true, n, n + 1);
@@ -10,6 +13,7 @@ export const ship = (name) => {
   };
 
   return {
+    getLength,
     isSunk,
     hit,
   };
@@ -19,7 +23,7 @@ function wasHit(position) {
   return position === true;
 }
 
-function getLength(name) {
+function lengthByName(name) {
   switch (name) {
     case "carrier":
       return 5;
