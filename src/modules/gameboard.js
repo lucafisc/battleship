@@ -2,12 +2,26 @@ import { ship } from "../modules/ship";
 
 export const gameboard = () => {
   let board = newBoard();
+  let ships = [];
   const getBoard = () => {
     return board;
   };
 
   const placeShip = (orientation, shipName, column, row) => {
-    const newShip = ship(shipName);
+    let newShip = ship(shipName);
+
+    if (ships.includes(shipName)) {
+      let index = ships.findIndex((i) => i === newShip);
+      console.log("indluds!");
+    } else {
+      ships.push(shipName);
+    }
+
+    // Object.keys(board).forEach(function (key, index) {
+    //   console.log(key);
+    // });
+
+    //use map to reset ship location
     const shipLength = newShip.getLength();
     switch (orientation) {
       case "vertical":
@@ -32,12 +46,22 @@ export const gameboard = () => {
 
 function placeVertical(shipLength, board, column, row) {
   let index = row;
-  if (index + shipLength > 10) {
-    return;
-  } else {
+  let freeSpace = isEndOfBoard(index, shipLength);
+  if (freeSpace) {
+    let j = index;
     for (let i = 0; i < shipLength; i++) {
-      board[column][index]["ship"] = true;
-      index += 1;
+      if (board[column][j]["ship"] === true) {
+        freeSpace = false;
+      }
+      j += 1;
+    }
+  }
+
+  if (freeSpace) {
+    let j = index;
+    for (let i = 0; i < shipLength; i++) {
+      board[column][j]["ship"] = true;
+      j += 1;
     }
   }
 }
@@ -45,17 +69,32 @@ function placeVertical(shipLength, board, column, row) {
 function placeHorizontal(shipLength, board, column, row) {
   const alphabet = makeAlphabet();
   let index = alphabet.findIndex((i) => i === column);
-  console.log(index);
-  console.log(alphabet[index]);
-  console.log(shipLength);
-  console.log(index + shipLength);
-  if (index + shipLength > 10) {
-    return;
-  } else {
+
+  //check if there is space to place ship
+  let freeSpace = isEndOfBoard(index, shipLength);
+
+  if (freeSpace) {
+    let j = index;
+    for (let i = 0; i < shipLength; i++) {
+      if (board[alphabet[j]][row]["ship"] === true) {
+        freeSpace = false;
+      }
+      j += 1;
+    }
+  }
+  if (freeSpace) {
     for (let i = 0; i < shipLength; i++) {
       board[alphabet[index]][row]["ship"] = true;
       index += 1;
     }
+  }
+}
+
+function isEndOfBoard(index, shipLength) {
+  if (index + shipLength > 10) {
+    return false;
+  } else {
+    return true;
   }
 }
 
