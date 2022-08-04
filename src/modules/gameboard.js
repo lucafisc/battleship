@@ -21,10 +21,29 @@ export const gameboard = () => {
     if (orientation === "vertical") {
       let index = row;
       freeSpace = spaceInBoard(index, shipLength);
-      freeSpace = spaceInCell(index, column, shipLength, board, freeSpace);
+      freeSpace = spaceInCellVertical(
+        column,
+        index,
+        shipLength,
+        board,
+        freeSpace
+      );
 
       if (freeSpace) {
         shipToBoardVertical(column, index, shipLength, board, shipName);
+      }
+    } else if (orientation === "horizontal") {
+      let index = alphabet.findIndex((i) => i === column);
+      freeSpace = spaceInBoard(index, shipLength);
+      freeSpace = spaceInCellHorizontal(
+        index,
+        row,
+        shipLength,
+        board,
+        freeSpace
+      );
+      if (freeSpace) {
+        shipToBoardHorizontal(index, row, shipLength, board, shipName);
       }
     }
 
@@ -49,7 +68,7 @@ export const gameboard = () => {
   };
 };
 
-function spaceInCell(row, column, length, board, freeSpace) {
+function spaceInCellVertical(column, row, length, board, freeSpace) {
   for (let i = 0; i < length; i++) {
     if (
       board[column][row]["ship"] !== false ||
@@ -58,6 +77,19 @@ function spaceInCell(row, column, length, board, freeSpace) {
       freeSpace = false;
     }
     row += 1;
+  }
+  return freeSpace;
+}
+
+function spaceInCellHorizontal(column, row, length, board, freeSpace) {
+  for (let i = 0; i < length; i++) {
+    if (
+      board[alphabet[column]][row]["ship"] !== false ||
+      board[alphabet[column]][row]["buffer"] !== false
+    ) {
+      freeSpace = false;
+    }
+    column += 1;
   }
   return freeSpace;
 }
@@ -75,11 +107,14 @@ function shipToBoardVertical(column, row, length, board, shipName) {
 
   //add horizontal buffers
   for (let j = -1; j < 2; j++) {
-    if (board[alphabet[index + j]][row - 1]) {
-      board[alphabet[index + j]][row - 1]["buffer"] = true;
-    }
-    if (board[alphabet[index + j]][row + length]) {
-      board[alphabet[index + j]][row + length]["buffer"] = true;
+    if (index + j >= 0 && index + j < 9) {
+      if (board[alphabet[index + j]][row - 1]) {
+        board[alphabet[index + j]][row - 1]["buffer"] = true;
+      }
+
+      if (board[alphabet[index + j]][row + length]) {
+        board[alphabet[index + j]][row + length]["buffer"] = true;
+      }
     }
   }
 
@@ -93,6 +128,33 @@ function shipToBoardVertical(column, row, length, board, shipName) {
       board[alphabet[index + 1]][row]["buffer"] = true;
     }
     row += 1;
+  }
+}
+
+function shipToBoardHorizontal(column, row, length, board, shipName) {
+  //add vertical buffers
+  for (let j = -1; j < 2; j++) {
+    if (column + j >= 0 && column + j < 9) {
+      if (board[alphabet[column - 1]][row + j]) {
+        board[alphabet[column - 1]][row + j]["buffer"] = true;
+      }
+
+      if (board[alphabet[column + length]][row + j]) {
+        board[alphabet[column + length]][row + j]["buffer"] = true;
+      }
+    }
+  }
+
+  //add horizontal buffers and ship
+  for (let i = 0; i < length; i++) {
+    board[alphabet[column]][row]["ship"] = shipName;
+    if (board[alphabet[column]][row - 1]) {
+      board[alphabet[column]][row - 1]["buffer"] = true;
+    }
+    if (board[alphabet[column]][row + 1]) {
+      board[alphabet[column]][row + 1]["buffer"] = true;
+    }
+    column += 1;
   }
 }
 

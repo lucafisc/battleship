@@ -1,5 +1,5 @@
 import { gameboard } from "./modules/gameboard";
 
 let myBoard = gameboard();
-const shipName = "destroyer";
-myBoard.placeShip("vertical", shipName, "B", 0);
+const shipName = "battleship";
+myBoard.placeShip("horizontal", shipName, "F", 7);
