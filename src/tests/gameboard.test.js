@@ -8,7 +8,7 @@ test("test receive attack", () => {
   expect(board["G"]["4"]["hit"]).toBeFalsy();
 });
 
-test.only("place ships vertically", () => {
+test("place ships vertically", () => {
   let myBoard = gameboard();
   const shipName = "destroyer";
   myBoard.placeShip("vertical", shipName, "B", 3);
@@ -34,7 +34,7 @@ test("place ships vertically that do not fit board", () => {
 
 test("place ships horizontally", () => {
   let myBoard = gameboard();
-  const shipName = "submarine";
+  const shipName = "battleship";
   myBoard.placeShip("horizontal", shipName, "F", 7);
   let board = myBoard.getBoard();
 
@@ -79,7 +79,7 @@ test("does not place ships in same location", () => {
   expect(board["D"]["5"]["ship"]).toBeFalsy();
 });
 
-test("change ship location", () => {
+test.only("change ship location", () => {
   let myBoard = gameboard();
   const shipName = "carrier";
   myBoard.placeShip("horizontal", shipName, "B", 6);

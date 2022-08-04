@@ -1,7 +1,11 @@
-export const ship = (name, coordinates) => {
+export const ship = (name, column, row) => {
+  let orientation;
   let sunk = false;
-  const getCoordinates = (coordinates) => {
-    return coordinates;
+  const getName = () => {
+    return name;
+  };
+  const getCoordinates = () => {
+    return [column, row];
   };
   const length = lengthByName(name);
   const getLength = () => {
@@ -15,11 +19,22 @@ export const ship = (name, coordinates) => {
     return whereHit.every(wasHit);
   };
 
+  const updateOrientation = (value) => {
+    orientation = value;
+  };
+
+  const getOrientation = () => {
+    return orientation;
+  };
+
   return {
+    getName,
     getCoordinates,
     getLength,
     isSunk,
     hit,
+    updateOrientation,
+    getOrientation,
   };
 };
 
