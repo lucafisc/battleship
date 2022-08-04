@@ -8,7 +8,7 @@ test("test receive attack", () => {
   expect(board["G"]["4"]["hit"]).toBeFalsy();
 });
 
-test("place ships vertically", () => {
+test.only("place ships vertically", () => {
   let myBoard = gameboard();
   const shipName = "destroyer";
   myBoard.placeShip("vertical", shipName, "A", 3);
@@ -92,10 +92,11 @@ test("change ship location", () => {
   expect(board["H"]["5"]["ship"]).toBeTruthy();
   expect(board["H"]["6"]["ship"]).toBeTruthy();
   expect(board["H"]["7"]["ship"]).toBeTruthy();
-
   expect(board["B"]["6"]["ship"]).toBeFalsy();
   expect(board["C"]["6"]["ship"]).toBeFalsy();
   expect(board["D"]["6"]["ship"]).toBeFalsy();
   expect(board["E"]["6"]["ship"]).toBeFalsy();
   expect(board["F"]["6"]["ship"]).toBeFalsy();
 });
+
+test("hit ship", () => {});

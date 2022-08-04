@@ -1,5 +1,8 @@
-export const ship = (name) => {
+export const ship = (name, coordinates) => {
   let sunk = false;
+  const getCoordinates = (coordinates) => {
+    return coordinates;
+  };
   const length = lengthByName(name);
   const getLength = () => {
     return length;
@@ -13,6 +16,7 @@ export const ship = (name) => {
   };
 
   return {
+    getCoordinates,
     getLength,
     isSunk,
     hit,
