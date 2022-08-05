@@ -6,7 +6,27 @@
 }
 
 :root {
+    --background: #f8f6e6;
+    --water: hsl(206deg 100% 94%);
+    --hit: #ff6129;
     --blue: #4141ff;
+    --light-blue: #6767fd;
     --yellow: #fee1a3;
     --gray: #323232;
+}
+
+body {
+    padding: 0 80px;
+    max-width: 900px;
+    background-color: var(--background);
+    margin: 0 auto;
+}
+
+.container {
+    border-radius: 50px;
+    background-color: white;
+    display: flex;
+    gap: 80px;
+    justify-content: center;
+    padding: 50px;
 }

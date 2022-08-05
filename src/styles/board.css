@@ -1,24 +1,34 @@
 .cell {
     width: 32px;
     aspect-ratio: 1;
-    border: 0.5px solid var(--blue);
     cursor: pointer;
+    background-color: var(--water);
+    margin: 1px;
+    border-radius: 4px;
 }
 
 .cell:hover {
     background-color: var(--yellow);
 }
 
-.hit-miss {
-    background-color: var(--yellow);
+.my-ship {
+    background-color: var(--light-blue);
+}
+
+.hit-miss,
+.hit-ship {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    cursor: not-allowed !important;
 }
 
-.hit-miss:hover {
-    cursor: not-allowed !important;
+.hit-miss {
+    background-color: var(--yellow);
+}
+
+.hit-ship {
+    background-color: var(--hit);
 }
 
 .dot {
@@ -27,6 +37,8 @@
     background-color: var(--gray);
     border-radius: 50%;
 }
+
+
 
 .board-row {
     display: flex;

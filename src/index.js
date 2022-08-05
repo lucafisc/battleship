@@ -7,7 +7,17 @@ import "./styles/board.css";
 const human = player("human");
 const cpu = player("cpu");
 
-let board = human.getPlayerBoard();
-board.receiveAttack("A", "1");
-console.log(board.getBoard());
+let myBoard = human.getPlayerBoard();
+let enemyBoard = cpu.getPlayerBoard();
+const shipName = "carrier";
+
+myBoard.placeShip("horizontal", shipName, "F", 3);
+
+myBoard.receiveAttack("A", "3");
+myBoard.receiveAttack("H", "3");
+
+console.log(myBoard);
+
+console.log(myBoard.getBoard());
 renderBoard(human);
+renderBoard(cpu);

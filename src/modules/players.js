@@ -8,8 +8,8 @@ export const player = (type) => {
     return board;
   };
 
-  const attackEnemyBoard = (column, row, enemy) => {
-    let enemyBoard = enemy.getPlayerBoard();
+  const attackEnemyBoard = (column, row, who) => {
+    let enemyBoard = who.getPlayerBoard();
     enemyBoard.receiveAttack(column, row);
   };
 
@@ -20,7 +20,7 @@ export const player = (type) => {
     attackEnemyBoard(index, row, enemy);
   };
 
-  const getPlayerType = (type) => {
+  const getPlayerType = () => {
     return type;
   };
 
@@ -29,5 +29,6 @@ export const player = (type) => {
     getPlayerBoard,
     randomMove,
     getPlayerType,
+    name,
   };
 };
