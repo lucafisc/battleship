@@ -1,3 +1,5 @@
+import { alphabet } from "./board-factory";
+
 export const ship = (name, column, row) => {
   let orientation;
   let sunk = false;
@@ -27,6 +29,22 @@ export const ship = (name, column, row) => {
     return orientation;
   };
 
+  const getHit = (hitColumn, hitRow) => {
+    let position;
+    if (orientation === "vertical") {
+      let index = hitRow;
+      let initial = row;
+      position = index - initial;
+    } else if (orientation === "horizontal") {
+      let index = alphabet.findIndex((i) => i === hitColumn);
+      let initial = alphabet.findIndex((i) => i === column);
+      position = index - initial;
+    }
+
+    whereHit[position] = true;
+    console.log(whereHit);
+  };
+
   return {
     getName,
     getCoordinates,
@@ -35,6 +53,7 @@ export const ship = (name, column, row) => {
     hit,
     updateOrientation,
     getOrientation,
+    getHit,
   };
 };
 

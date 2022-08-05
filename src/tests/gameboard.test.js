@@ -79,7 +79,7 @@ test("does not place ships in same location", () => {
   expect(board["D"]["5"]["ship"]).toBeFalsy();
 });
 
-test.only("change ship location", () => {
+test("change ship location", () => {
   let myBoard = gameboard();
   const shipName = "carrier";
   myBoard.placeShip("horizontal", shipName, "B", 6);
@@ -99,4 +99,13 @@ test.only("change ship location", () => {
   expect(board["F"]["6"]["ship"]).toBeFalsy();
 });
 
-test("hit ship", () => {});
+test("hit ship", () => {
+  let myBoard = gameboard();
+  let board = myBoard.getBoard();
+  const shipName = "carrier";
+  myBoard.placeShip("horizontal", shipName, "B", 6);
+  myBoard.receiveAttack("C", 6);
+  myBoard.receiveAttack("A", 8);
+  expect(board["C"]["6"]["hit"]).toBe("hit");
+  expect(board["A"]["8"]["hit"]).toBe("missed");
+});
