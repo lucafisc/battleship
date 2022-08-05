@@ -1,0 +1,12 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --blue: #4141ff;
+    --yellow: #fee1a3;
+    --gray: #323232;
+}

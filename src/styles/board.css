@@ -1,0 +1,33 @@
+.cell {
+    width: 32px;
+    aspect-ratio: 1;
+    border: 0.5px solid var(--blue);
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: var(--yellow);
+}
+
+.hit-miss {
+    background-color: var(--yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.hit-miss:hover {
+    cursor: not-allowed !important;
+}
+
+.dot {
+    height: 5px;
+    width: 5px;
+    background-color: var(--gray);
+    border-radius: 50%;
+}
+
+.board-row {
+    display: flex;
+}
