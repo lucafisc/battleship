@@ -42,7 +42,6 @@ export const ship = (name, column, row) => {
     }
 
     whereHit[position] = true;
-    console.log(whereHit);
   };
 
   return {

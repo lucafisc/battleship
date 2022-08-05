@@ -99,6 +99,27 @@ test("change ship location", () => {
   expect(board["F"]["6"]["ship"]).toBeFalsy();
 });
 
+test("change ship location", () => {
+  let myBoard = gameboard();
+  const shipName = "carrier";
+  myBoard.placeShip("vertical", shipName, "B", 5);
+  myBoard.placeShip("horizontal", shipName, "F", 3);
+
+  let board = myBoard.getBoard();
+
+  expect(board["F"]["3"]["ship"]).toBeTruthy();
+  expect(board["G"]["3"]["ship"]).toBeTruthy();
+  expect(board["H"]["3"]["ship"]).toBeTruthy();
+  expect(board["I"]["3"]["ship"]).toBeTruthy();
+  expect(board["J"]["3"]["ship"]).toBeTruthy();
+
+  expect(board["B"]["5"]["ship"]).toBeFalsy();
+  expect(board["B"]["6"]["ship"]).toBeFalsy();
+  expect(board["B"]["7"]["ship"]).toBeFalsy();
+  expect(board["B"]["8"]["ship"]).toBeFalsy();
+  expect(board["B"]["9"]["ship"]).toBeFalsy();
+});
+
 test("hit ship", () => {
   let myBoard = gameboard();
   let board = myBoard.getBoard();

@@ -102,12 +102,11 @@ export const gameboard = () => {
     if (board[column][row]["ship"] !== false) {
       board[column][row]["hit"] = "hit";
       let name = board[column][row]["ship"];
-      //    let index = ships.findIndex()
-      ships[0].getHit(column, row);
+      let index = ships.findIndex((element) => element.getName() === name);
+      ships[index].getHit(column, row);
     } else {
       board[column][row]["hit"] = "missed";
     }
-    console.log(areAllSunk());
   };
 
   const areAllSunk = () => {

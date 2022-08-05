@@ -53,7 +53,6 @@ export const removeVerticalShip = (column, row, length, board, shipName) => {
 
   //remove vertical buffers and ship
   for (let i = 0; i < length; i++) {
-    console.log([row]);
     board[column][row]["ship"] = false;
     if (board[alphabet[index - 1]]) {
       board[alphabet[index - 1]][row]["buffer"] = removeFromArray(
@@ -72,11 +71,9 @@ export const removeVerticalShip = (column, row, length, board, shipName) => {
 };
 
 export const shipToBoardHorizontal = (column, row, length, board, shipName) => {
-  console.log(column);
-
   //add vertical buffers
   for (let j = -1; j < 2; j++) {
-    if (column + j >= 0 && column + j < 9) {
+    if (column + j >= 0 && column + length < 9) {
       if (board[alphabet[column - 1]][row + j]) {
         board[alphabet[column - 1]][row + j]["buffer"].push(shipName);
       }
@@ -101,7 +98,6 @@ export const shipToBoardHorizontal = (column, row, length, board, shipName) => {
 };
 
 export const removeHorizontalShip = (column, row, length, board, shipName) => {
-  console.log(column);
   //remove vertical buffers
   for (let j = -1; j < 2; j++) {
     if (column + j >= 0 && column + j < 9) {
