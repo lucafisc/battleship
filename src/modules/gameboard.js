@@ -101,18 +101,24 @@ export const gameboard = () => {
   const receiveAttack = (column, row) => {
     if (board[column][row]["ship"] !== false) {
       board[column][row]["hit"] = "hit";
-
+      let name = board[column][row]["ship"];
+      //    let index = ships.findIndex()
       ships[0].getHit(column, row);
     } else {
       board[column][row]["hit"] = "missed";
     }
-    console.log(ships);
+    console.log(areAllSunk());
+  };
+
+  const areAllSunk = () => {
+    return ships.every((item) => item.isSunk());
   };
 
   return {
     receiveAttack,
     getBoard,
     placeShip,
+    areAllSunk,
   };
 };
 

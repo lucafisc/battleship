@@ -18,7 +18,7 @@ export const ship = (name, column, row) => {
     whereHit.fill(true, n, n + 1);
   };
   const isSunk = () => {
-    return whereHit.every(wasHit);
+    return whereHit.every((position) => position === true);
   };
 
   const updateOrientation = (value) => {
@@ -56,10 +56,6 @@ export const ship = (name, column, row) => {
     getHit,
   };
 };
-
-function wasHit(position) {
-  return position === true;
-}
 
 function lengthByName(name) {
   switch (name) {
