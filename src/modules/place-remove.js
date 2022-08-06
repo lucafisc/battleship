@@ -74,7 +74,13 @@ export const shipToBoardHorizontal = (column, row, length, board, shipName) => {
   //add vertical buffers
   for (let j = -1; j < 2; j++) {
     if (column + j >= 0 && column + length < 9) {
-      if (board[alphabet[column - 1]][row + j]) {
+      console.log("this is line 77");
+      console.log(`this is the column: ${column}`);
+      console.log(`this is the column minus 1: ${column - 1}`);
+      console.log(`this is the alphabet of the sum:${alphabet[column - 1]}`);
+      console.log(`this is the row plus j: ${row + j}`);
+
+      if (column > 0 && board[alphabet[column - 1]][row + j]) {
         board[alphabet[column - 1]][row + j]["buffer"].push(shipName);
       }
 
@@ -100,7 +106,12 @@ export const shipToBoardHorizontal = (column, row, length, board, shipName) => {
 export const removeHorizontalShip = (column, row, length, board, shipName) => {
   //remove vertical buffers
   for (let j = -1; j < 2; j++) {
-    if (column + j >= 0 && column + j < 9) {
+    console.log("this is line 110");
+    console.log(`this is the column: ${column}`);
+    console.log(`this is the column - 1: ${column - 1}`);
+    console.log(`this is row:${row}`);
+    console.log(`this is the row plus j: ${row + j}`);
+    if (column - 1 >= 0 && column + j < 9) {
       if (board[alphabet[column - 1]][row + j]) {
         board[alphabet[column - 1]][row + j]["buffer"] = removeFromArray(
           board[alphabet[column - 1]][row + j]["buffer"],
@@ -108,7 +119,7 @@ export const removeHorizontalShip = (column, row, length, board, shipName) => {
         );
       }
 
-      if (board[alphabet[column + length]][row + j]) {
+      if (column + length < 10 && board[alphabet[column + length]][row + j]) {
         board[alphabet[column + length]][row + j]["buffer"] = removeFromArray(
           board[alphabet[column + length]][row + j]["buffer"],
           shipName
