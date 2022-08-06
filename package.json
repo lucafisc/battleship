@@ -30,6 +30,10 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "jest": "^28.1.3"
+    "font-awesome": "^4.7.0",
+    "jest": "^28.1.3",
+    "pubsub": "^3.2.1",
+    "PubSub": "^4.0.0",
+    "pubsub-js": "^1.9.4"
   }
 }

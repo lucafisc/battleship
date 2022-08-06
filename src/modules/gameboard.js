@@ -9,6 +9,7 @@ import {
   spaceInBoard,
 } from "./place-remove";
 import { newBoard, alphabet } from "./board-factory";
+import { pubsub } from "./pubsub";
 
 export const gameboard = () => {
   let board = newBoard();
@@ -24,12 +25,14 @@ export const gameboard = () => {
 
     let existingShip = false;
     let existingCoordinates;
+    let or;
     let existingShipIndex = ships.findIndex(
       (ship) => ship.getName() === shipName
     );
     if (existingShipIndex !== -1) {
       existingShip = true;
       let existingOrientation = ships[existingShipIndex].getOrientation();
+      or = existingOrientation;
       existingCoordinates = ships[existingShipIndex].getCoordinates();
       ships.splice(existingShipIndex, 1);
 
@@ -88,12 +91,7 @@ export const gameboard = () => {
       newShip.updateOrientation(orientation);
       ships.push(newShip);
     } else if (existingShip) {
-      placeShip(
-        orientation,
-        shipName,
-        existingCoordinates[0],
-        existingCoordinates[1]
-      );
+      placeShip(or, shipName, existingCoordinates[0], existingCoordinates[1]);
     }
     console.log(board);
   };

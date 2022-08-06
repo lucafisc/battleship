@@ -19,13 +19,18 @@
     aspect-ratio: 1;
     cursor: pointer;
     background-color: transparent;
-    margin: 1px;
-    background-color: var(--off-gray);
+    background-color: var(--gray);
+    transition: all 0.2s ease-out;
+    margin: 2px;
     /* border: 0.5px solid var(--off-black); */
 }
 
 #cpu-board>.gameboard>.board-row>.cell:hover {
     background-color: var(--yellow);
+}
+
+#cpu-board>.gameboard>.board-row>.cell:active {
+    transform: scale(0.9);
 }
 
 #human-board>.gameboard>.board-row>.cell {
