@@ -1,11 +1,10 @@
 import { alphabet } from "./board-factory";
 import { player } from "./players";
-const container = document.getElementById("container");
 
 export const renderBoard = (player) => {
   let board = player.getPlayerBoard().getBoard();
   let boardContainer = document.createElement("div");
-  boardContainer.classList.add("board-container");
+  boardContainer.classList.add("gameboard");
   for (let i = 0; i < 10; i++) {
     let boardRow = document.createElement("div");
     boardRow.classList.add("board-row");
@@ -39,6 +38,12 @@ export const renderBoard = (player) => {
       boardRow.append(cell);
     }
     boardContainer.append(boardRow);
+  }
+  let container;
+  if (player.getPlayerType() === "human") {
+    container = document.querySelector("#human-board");
+  } else {
+    container = document.querySelector("#cpu-board");
   }
   container.append(boardContainer);
 };

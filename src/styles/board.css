@@ -1,18 +1,39 @@
-.cell {
-    width: 32px;
-    aspect-ratio: 1;
-    cursor: pointer;
-    background-color: var(--water);
-    margin: 1px;
-    border-radius: 4px;
+.gameboard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--default-padding);
 }
 
-.cell:hover {
+
+.board-row {
+    width: 100%;
+    display: flex;
+    flex: 1;
+}
+
+.cell {
+    flex: 1;
+    aspect-ratio: 1;
+    cursor: pointer;
+    background-color: transparent;
+    margin: 1px;
+    background-color: var(--off-gray);
+    /* border: 0.5px solid var(--off-black); */
+}
+
+#cpu-board>.gameboard>.board-row>.cell:hover {
     background-color: var(--yellow);
 }
 
+#human-board>.gameboard>.board-row>.cell {
+    cursor: default !important;
+}
+
 .my-ship {
-    background-color: var(--light-blue);
+    background-color: var(--blue);
 }
 
 .hit-miss,
@@ -28,18 +49,12 @@
 }
 
 .hit-ship {
-    background-color: var(--hit);
+    background-color: var(--red);
 }
 
 .dot {
     height: 5px;
     width: 5px;
-    background-color: var(--gray);
+    background-color: var(--off-black);
     border-radius: 50%;
-}
-
-
-
-.board-row {
-    display: flex;
 }

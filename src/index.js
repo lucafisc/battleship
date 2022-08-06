@@ -1,8 +1,11 @@
 import { gameboard } from "./modules/gameboard";
 import { player } from "./modules/players";
 import { renderBoard } from "./modules/dom";
+import { loadInterface } from "./modules/interface";
 import "./styles/main.css";
 import "./styles/board.css";
+
+loadInterface();
 
 const human = player("human");
 const cpu = player("cpu");
