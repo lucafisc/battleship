@@ -7,7 +7,7 @@ pubsub.subscribe("render-board", (which) => {
   renderBoard(which);
 });
 
-export const renderBoard = (player) => {
+const renderBoard = (player) => {
   let board = player.getPlayerBoard().getBoard();
   let playerType = player.getPlayerType();
   let boardContainer = document.createElement("div");
@@ -42,7 +42,8 @@ export const renderBoard = (player) => {
 
       if (playerType !== "human") {
         cell.addEventListener("mouseup", (event) => {
-          pubsub.publish("new-player-attack", event.target);
+          let coordinates = event.target.dataset;
+          pubsub.publish("new-player-attack", coordinates);
         });
       }
       boardRow.append(cell);
@@ -73,9 +74,3 @@ const makeDot = () => {
   dot.classList.add("dot");
   return dot;
 };
-
-//event listeners
-const refreshBtn = document.querySelector(".refresh-container");
-refreshBtn.addEventListener("mouseup", (event) => {
-  pubsub.publish("random-place-ships");
-});

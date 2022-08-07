@@ -91,6 +91,12 @@ body {
     display: flex;
     justify-items: center;
     align-items: center;
+    transition: all 0.3s ease-out;
+}
+
+.not-turn {
+    transform: scale(0.95) !important;
+    background-color: var(--off-gray) !important;
 }
 
 .board-title-container.enemy {
@@ -117,7 +123,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.2s ease-out;
+    transition: all 0.2s ease-out;
 }
 
 .refresh-container:active,
@@ -133,6 +139,10 @@ body {
     background-color: var(--green);
 }
 
+.disabled {
+    cursor: not-allowed;
+    background-color: var(--off-gray);
+}
 
 .button {
     height: 2rem;
@@ -143,6 +153,11 @@ body {
 .refresh-container:hover>.button,
 .confirm-container:hover>.button {
     transform: scale(1.1);
+}
+
+.disabled:hover>.button {
+    transform: scale(1) !important;
+    cursor: not-allowed;
 }
 
 .remaining-container {

@@ -19,13 +19,13 @@
     aspect-ratio: 1;
     cursor: pointer;
     background-color: transparent;
-    background-color: var(--gray);
+    background-color: var(--off-gray);
     transition: all 0.2s ease-out;
     margin: 2px;
     /* border: 0.5px solid var(--off-black); */
 }
 
-#cpu-board>.gameboard>.board-row>.cell:hover {
+#cpu-board:not(.not-turn)>.gameboard>.board-row>.cell:hover {
     background-color: var(--yellow);
 }
 
@@ -36,6 +36,8 @@
 #human-board>.gameboard>.board-row>.cell {
     cursor: default !important;
 }
+
+
 
 .my-ship {
     background-color: var(--blue);
@@ -53,13 +55,14 @@
     background-color: var(--yellow);
 }
 
-.hit-ship {
-    background-color: var(--red);
+.hit-ship,
+.hit-ship:hover {
+    background-color: var(--red) !important;
 }
 
 .dot {
-    height: 5px;
-    width: 5px;
+    height: 30%;
+    aspect-ratio: 1;
     background-color: var(--off-black);
     border-radius: 50%;
 }

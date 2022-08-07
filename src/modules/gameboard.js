@@ -90,10 +90,10 @@ export const gameboard = () => {
     if (freeSpace) {
       newShip.updateOrientation(orientation);
       ships.push(newShip);
+      return true;
     } else if (existingShip) {
       placeShip(or, shipName, existingCoordinates[0], existingCoordinates[1]);
     }
-    console.log(board);
   };
 
   const receiveAttack = (column, row) => {
