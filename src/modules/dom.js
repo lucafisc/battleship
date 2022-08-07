@@ -21,6 +21,10 @@ const renderBoard = (player) => {
       //check for human ships
       if (board[alphabet[j]][i]["ship"] !== false && playerType === "human") {
         cell.classList.add("my-ship");
+        cell.addEventListener("mouseup", (event) => {
+          let coordinates = event.target.dataset;
+          pubsub.publish("rotate-ship", coordinates);
+        });
       }
       //check for hit ships
       if (
@@ -37,7 +41,6 @@ const renderBoard = (player) => {
       }
       cell.dataset.row = i;
       cell.dataset.column = alphabet[j];
-
       cell.classList.add("cell");
 
       if (playerType !== "human") {

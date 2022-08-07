@@ -19,6 +19,7 @@ export const gameboard = () => {
   };
 
   const placeShip = (orientation, shipName, column, row) => {
+    console.log(shipName);
     let freeSpace = true;
     let newShip = ship(shipName, column, row);
     const shipLength = newShip.getLength();
@@ -107,6 +108,11 @@ export const gameboard = () => {
     }
   };
 
+  const getShipByName = (name) => {
+    let index = ships.findIndex((i) => i.getName() === name);
+    return ships[index];
+  };
+
   const areAllSunk = () => {
     return ships.every((item) => item.isSunk());
   };
@@ -115,6 +121,7 @@ export const gameboard = () => {
     receiveAttack,
     getBoard,
     placeShip,
+    getShipByName,
     areAllSunk,
   };
 };
