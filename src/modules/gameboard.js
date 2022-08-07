@@ -123,3 +123,8 @@ export const resetGameboard = (thisBoard) => {
   thisBoard = "";
   thisBoard = newBoard();
 };
+
+export const wasAlreadyHit = (which, column, row) => {
+  let board = which.getPlayerBoard().getBoard();
+  return board[column][row]["hit"];
+};

@@ -1,4 +1,4 @@
-import { gameboard } from "./gameboard";
+import { gameboard, wasAlreadyHit } from "./gameboard";
 import { alphabet } from "./board-factory";
 
 export const player = (type) => {
@@ -9,15 +9,20 @@ export const player = (type) => {
   };
 
   const attackEnemyBoard = (column, row, who) => {
+    console.log("attack!");
+
     let enemyBoard = who.getPlayerBoard();
     enemyBoard.receiveAttack(column, row);
   };
 
-  const randomMove = (enemy) => {
-    let row = Math.floor(Math.random() * 10);
-    let column = Math.floor(Math.random() * 10);
-    let index = alphabet.findIndex((i) => i === column);
-    attackEnemyBoard(index, row, enemy);
+  const randomMoveOn = (enemy) => {
+    let row;
+    let column;
+    do {
+      row = Math.floor(Math.random() * 10);
+      column = Math.floor(Math.random() * 10);
+    } while (wasAlreadyHit(enemy, alphabet[column], row) !== false);
+    attackEnemyBoard(alphabet[column], row, enemy);
   };
 
   const getPlayerType = () => {
@@ -27,7 +32,7 @@ export const player = (type) => {
   return {
     attackEnemyBoard,
     getPlayerBoard,
-    randomMove,
+    randomMoveOn,
     getPlayerType,
     name,
   };

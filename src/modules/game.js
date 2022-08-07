@@ -22,12 +22,6 @@ export const gameLoad = () => {
   myBoard = human.getPlayerBoard();
   enemyBoard = cpu.getPlayerBoard();
 
-  //separate
-  //   const shipName = "carrier";
-  //   myBoard.placeShip("horizontal", shipName, "F", 3);
-  //   myBoard.receiveAttack("A", "3");
-  //   myBoard.receiveAttack("H", "3");
-
   pubsub.publish("render-board", human);
   pubsub.publish("render-board", cpu);
 };
@@ -75,9 +69,20 @@ pubsub.subscribe("game-start", () => {
 pubsub.subscribe("new-player-attack", (coordinates) => {
   coordinates = JSON.parse(JSON.stringify(coordinates));
   console.log(coordinates.row);
-  enemyBoard.receiveAttack(coordinates.column, coordinates.row);
+  human.attackEnemyBoard(coordinates.column, coordinates.row, cpu);
   pubsub.publish("new-current-player", "cpu");
 
+  setTimeout(() => {
+    pubsub.publish("cpu-round");
+  }, "1000");
   pubsub.publish("render-board", human);
   pubsub.publish("render-board", cpu);
+});
+
+//cpu round
+pubsub.subscribe("cpu-round", () => {
+  cpu.randomMoveOn(human);
+  pubsub.publish("render-board", human);
+  pubsub.publish("render-board", cpu);
+  pubsub.publish("new-current-player", "human");
 });
