@@ -9,10 +9,14 @@ export const player = (type) => {
   };
 
   const attackEnemyBoard = (column, row, who) => {
-    console.log("attack!");
-
     let enemyBoard = who.getPlayerBoard();
     enemyBoard.receiveAttack(column, row);
+    let board = enemyBoard.getBoard();
+    if (board[column][row]["ship"] !== false) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const randomMoveOn = (enemy) => {
@@ -22,7 +26,7 @@ export const player = (type) => {
       row = Math.floor(Math.random() * 10);
       column = Math.floor(Math.random() * 10);
     } while (wasAlreadyHit(enemy, alphabet[column], row) !== false);
-    attackEnemyBoard(alphabet[column], row, enemy);
+    return attackEnemyBoard(alphabet[column], row, enemy);
   };
 
   const getPlayerType = () => {

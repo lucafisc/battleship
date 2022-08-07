@@ -68,21 +68,34 @@ pubsub.subscribe("game-start", () => {
 //receive attack
 pubsub.subscribe("new-player-attack", (coordinates) => {
   coordinates = JSON.parse(JSON.stringify(coordinates));
-  console.log(coordinates.row);
-  human.attackEnemyBoard(coordinates.column, coordinates.row, cpu);
-  pubsub.publish("new-current-player", "cpu");
-
-  setTimeout(() => {
-    pubsub.publish("cpu-round");
-  }, "1000");
+  let hitShip = human.attackEnemyBoard(
+    coordinates.column,
+    coordinates.row,
+    cpu
+  );
   pubsub.publish("render-board", human);
   pubsub.publish("render-board", cpu);
+  if (hitShip) {
+    pubsub.publish("new-current-player", "human");
+  } else {
+    pubsub.publish("new-current-player", "cpu");
+    setTimeout(() => {
+      pubsub.publish("cpu-round");
+    }, "1000");
+  }
 });
 
 //cpu round
 pubsub.subscribe("cpu-round", () => {
-  cpu.randomMoveOn(human);
+  let hitShip = cpu.randomMoveOn(human);
   pubsub.publish("render-board", human);
   pubsub.publish("render-board", cpu);
-  pubsub.publish("new-current-player", "human");
+
+  if (hitShip) {
+    setTimeout(() => {
+      pubsub.publish("cpu-round");
+    }, "1000");
+  } else {
+    pubsub.publish("new-current-player", "human");
+  }
 });
