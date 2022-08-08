@@ -13,24 +13,41 @@ const renderBoard = (player) => {
   let boardContainer = document.createElement("div");
   boardContainer.classList.add("gameboard");
   for (let i = 0; i < 10; i++) {
+    //board row
     let boardRow = document.createElement("div");
     boardRow.classList.add("board-row");
     //internal loop
     for (let j = 0; j < 10; j++) {
       let cell = document.createElement("div");
+      cell.id = "ship";
+
       //check for human ships
       if (board[alphabet[j]][i]["ship"] !== false && playerType === "human") {
         cell.classList.add("my-ship");
+        cell.draggable = true;
         cell.addEventListener("mouseup", (event) => {
+          console.log("fired");
           let coordinates = event.target.dataset;
           pubsub.publish("rotate-ship", coordinates);
         });
+        cell.addEventListener("dragstart", (event) => {
+          console.log("dragstart");
+          event.target.classList.add("dragged");
+        });
+        cell.addEventListener("dragend", (event) => {
+          console.log("dragend");
+          event.target.classList.remove("dragged");
+        });
       }
-      //check for hit ships
+
+      if (board[alphabet[j]][i]["buffer"].length > 0) {
+        cell.classList.add("buffer");
+      }
       if (
         board[alphabet[j]][i]["ship"] !== false &&
         board[alphabet[j]][i]["hit"] === "hit"
       ) {
+        //check for hit ships
         cell.append(makeDot());
         cell.classList.add("hit-ship");
       }
@@ -38,6 +55,16 @@ const renderBoard = (player) => {
       else if (board[alphabet[j]][i]["hit"] === "missed") {
         cell.append(makeDot());
         cell.classList.add("hit-miss");
+      }
+      //check for empty cells
+      if (board[alphabet[j]][i]["ship"] === false) {
+        cell.addEventListener("dragenter", (e) => {
+          let coordinates = document.querySelector(".dragged").dataset;
+          console.log(coordinates);
+          let newCoordinates = e.target.dataset;
+          let data = { coordinates, newCoordinates };
+          pubsub.publish("dragged", data);
+        });
       }
       cell.dataset.row = i;
       cell.dataset.column = alphabet[j];

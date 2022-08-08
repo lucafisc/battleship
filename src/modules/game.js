@@ -68,6 +68,10 @@ pubsub.subscribe("game-start", () => {
 //rotate ship
 pubsub.subscribe("rotate-ship", (coordinates) => {
   coordinates = JSON.parse(JSON.stringify(coordinates));
+  console.log(myBoard.getBoard());
+  console.log(myBoard.getBoard()[coordinates.column]);
+  console.log(myBoard.getBoard()[coordinates.column][coordinates.row]["ship"]);
+
   let shipname =
     myBoard.getBoard()[coordinates.column][coordinates.row]["ship"];
   let ship = myBoard.getShipByName(shipname);
@@ -79,6 +83,24 @@ pubsub.subscribe("rotate-ship", (coordinates) => {
     orientation = "vertical";
   }
   myBoard.placeShip(orientation, shipname, coordinates[0], coordinates[1]);
+  pubsub.publish("render-board", human);
+});
+
+//drag ship
+pubsub.subscribe("dragged", (data) => {
+  data = JSON.parse(JSON.stringify(data));
+
+  let shipname =
+    myBoard.getBoard()[data.coordinates.column][data.coordinates.row]["ship"];
+  let ship = myBoard.getShipByName(shipname);
+  let orientation = ship.getOrientation();
+
+  myBoard.placeShip(
+    orientation,
+    shipname,
+    data.newCoordinates.column,
+    data.newCoordinates.row
+  );
   pubsub.publish("render-board", human);
 });
 

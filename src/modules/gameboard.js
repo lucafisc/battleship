@@ -19,7 +19,6 @@ export const gameboard = () => {
   };
 
   const placeShip = (orientation, shipName, column, row) => {
-    console.log(shipName);
     let freeSpace = true;
     let newShip = ship(shipName, column, row);
     const shipLength = newShip.getLength();
