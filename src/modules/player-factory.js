@@ -6,8 +6,19 @@ import { gameBoard } from "./gameboard-storage";
 export const player = (type) => {
   const boardObject = gameBoard();
   const getBoardObject = () => boardObject;
+  const isPlayerHuman = () => {
+    switch (type) {
+      case "human":
+        return true;
+      case "cpu":
+        return false;
+      default:
+        return "player type not defined";
+    }
+  };
   return {
     getBoardObject,
+    isPlayerHuman,
   };
 };
 
