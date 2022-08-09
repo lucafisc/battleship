@@ -1,7 +1,7 @@
 import { player } from "./modules/player-factory";
 import { renderBoard } from "./modules/gameboard-render";
 import { loadInterface } from "./modules/interface";
-import { gameLoad } from "./modules/game-control";
+import { newGame } from "./modules/game-control";
 import { pubsub } from "./modules/pubsub.js";
 import { domElements } from "./modules/dom-others";
 import "./styles/main.css";
@@ -18,7 +18,7 @@ import "./styles/board.css";
 
 function init() {
   loadInterface();
-  gameLoad();
+  newGame();
 }
 
 init();

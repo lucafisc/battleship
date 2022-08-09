@@ -3,19 +3,18 @@ import { gameboard, sucessPlacingShip } from "./gameboard-storage.js";
 import { player } from "./player-factory";
 import { alphabet } from "./gameboard-factory";
 
-let myBoard;
-let enemyBoard;
 let human;
 let cpu;
 
-export const gameLoad = () => {
+export const playersStorage = () => {
+  return [human, cpu];
+};
+
+export const newGame = () => {
   human = player("human");
   cpu = player("cpu");
-
-  console.log(human.getBoardObject().getBoardStorage());
-
-  // pubsub.publish("render-board", human);
-  // pubsub.publish("render-board", cpu);
+  // console.log(human.getBoardObject().getBoardStorage());
+  pubsub.publish("render-boards");
 };
 
 // const shipsArray = [
