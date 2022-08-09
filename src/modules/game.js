@@ -62,15 +62,11 @@ const wasShipPlaced = (placed, item, board) => {
 pubsub.subscribe("game-start", () => {
   let whoseTurn = "human";
   pubsub.publish("new-current-player", whoseTurn);
-  console.log("start!");
 });
 
 //rotate ship
 pubsub.subscribe("rotate-ship", (coordinates) => {
   coordinates = JSON.parse(JSON.stringify(coordinates));
-  console.log(myBoard.getBoard());
-  console.log(myBoard.getBoard()[coordinates.column]);
-  console.log(myBoard.getBoard()[coordinates.column][coordinates.row]["ship"]);
 
   let shipname =
     myBoard.getBoard()[coordinates.column][coordinates.row]["ship"];
@@ -88,18 +84,23 @@ pubsub.subscribe("rotate-ship", (coordinates) => {
 
 //drag ship
 pubsub.subscribe("dragged", (data) => {
-  data = JSON.parse(JSON.stringify(data));
+  const newData = JSON.parse(JSON.stringify(data));
 
   let shipname =
-    myBoard.getBoard()[data.coordinates.column][data.coordinates.row]["ship"];
+    myBoard.getBoard()[newData.existingCoordinates.column][
+      newData.existingCoordinates.row
+    ]["ship"];
+
   let ship = myBoard.getShipByName(shipname);
+  console.log({ ship, shipname });
+
   let orientation = ship.getOrientation();
 
   myBoard.placeShip(
     orientation,
     shipname,
-    data.newCoordinates.column,
-    data.newCoordinates.row
+    newData.newCoordinates.column,
+    newData.newCoordinates.row
   );
   pubsub.publish("render-board", human);
 });

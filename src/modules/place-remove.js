@@ -1,71 +1,74 @@
 import { alphabet } from "./board-factory";
 
 export const shipToBoardVertical = (column, row, length, board, shipName) => {
-  let index = alphabet.findIndex((i) => i === column);
+  // let index = alphabet.findIndex((i) => i === column);
 
-  //add horizontal buffers
-  for (let j = -1; j < 2; j++) {
-    if (index + j >= 0 && index + j < 9) {
-      if (board[alphabet[index + j]][row - 1]) {
-        board[alphabet[index + j]][row - 1]["buffer"].push(shipName);
-      }
+  // //add horizontal buffers
+  // for (let j = -1; j < 2; j++) {
+  //   if (index + j >= 0 && index + j < 9) {
+  //     if (board[alphabet[index + j]][row - 1]) {
+  //       // board[alphabet[index + j]][row - 1]["buffer"].push(shipName);
+  //     }
 
-      if (board[alphabet[index + j]][row + length]) {
-        board[alphabet[index + j]][row + length]["buffer"].push(shipName);
-      }
-    }
-  }
+  //     if (board[alphabet[index + j]][row + length]) {
+  //       // board[alphabet[index + j]][row + length]["buffer"].push(shipName);
+  //     }
+  //   }
+  // }
 
   //add vertical buffers and ship
+  const newBoard = { ...board };
   for (let i = 0; i < length; i++) {
-    board[column][row]["ship"] = shipName;
-    if (board[alphabet[index - 1]]) {
-      board[alphabet[index - 1]][row]["buffer"].push(shipName);
-    }
-    if (board[alphabet[index + 1]]) {
-      board[alphabet[index + 1]][row]["buffer"].push(shipName);
-    }
+    newBoard[column][row]["ship"] = shipName;
+    // if (board[alphabet[index - 1]]) {
+    //   // board[alphabet[index - 1]][row]["buffer"].push(shipName);
+    // }
+    // if (board[alphabet[index + 1]]) {
+    //   // board[alphabet[index + 1]][row]["buffer"].push(shipName);
+    // }
     row += 1;
+    console.log(newBoard);
   }
+  return newBoard;
 };
 
 export const removeVerticalShip = (column, row, length, board, shipName) => {
   let index = alphabet.findIndex((i) => i === column);
 
-  //remove horizontal buffers
-  for (let j = -1; j < 2; j++) {
-    if (index + j >= 0 && index + j < 9) {
-      if (board[alphabet[index + j]][row - 1]) {
-        board[alphabet[index + j]][row - 1]["buffer"] = removeFromArray(
-          board[alphabet[index + j]][row - 1]["buffer"],
-          shipName
-        );
-      }
+  // //remove horizontal buffers
+  // for (let j = -1; j < 2; j++) {
+  //   if (index + j >= 0 && index + j < 9) {
+  //     if (board[alphabet[index + j]][row - 1]) {
+  //       // board[alphabet[index + j]][row - 1]["buffer"] = removeFromArray(
+  //       //   board[alphabet[index + j]][row - 1]["buffer"],
+  //       //   shipName
+  //       // );
+  //     }
 
-      if (board[alphabet[index + j]][row + length]) {
-        board[alphabet[index + j]][row + length]["buffer"] = removeFromArray(
-          board[alphabet[index + j]][row + length]["buffer"],
-          shipName
-        );
-      }
-    }
-  }
+  //     if (board[alphabet[index + j]][row + length]) {
+  //       // board[alphabet[index + j]][row + length]["buffer"] = removeFromArray(
+  //       //   board[alphabet[index + j]][row + length]["buffer"],
+  //       //   shipName
+  //       // );
+  //     }
+  //   }
+  // }
 
   //remove vertical buffers and ship
   for (let i = 0; i < length; i++) {
     board[column][row]["ship"] = false;
-    if (board[alphabet[index - 1]]) {
-      board[alphabet[index - 1]][row]["buffer"] = removeFromArray(
-        board[alphabet[index - 1]][row]["buffer"],
-        shipName
-      );
-    }
-    if (board[alphabet[index + 1]]) {
-      board[alphabet[index + 1]][row]["buffer"] = removeFromArray(
-        board[alphabet[index + 1]][row]["buffer"],
-        shipName
-      );
-    }
+    // if (board[alphabet[index - 1]]) {
+    //   // board[alphabet[index - 1]][row]["buffer"] = removeFromArray(
+    //   //   board[alphabet[index - 1]][row]["buffer"],
+    //   //   shipName
+    //   // );
+    // }
+    // if (board[alphabet[index + 1]]) {
+    //   // board[alphabet[index + 1]][row]["buffer"] = removeFromArray(
+    //   //   board[alphabet[index + 1]][row]["buffer"],
+    //   //   shipName
+    //   // );
+    // }
     row += 1;
   }
 };
@@ -75,11 +78,11 @@ export const shipToBoardHorizontal = (column, row, length, board, shipName) => {
   for (let j = -1; j < 2; j++) {
     if (column + j >= 0 && column + length < 9) {
       if (column > 0 && board[alphabet[column - 1]][row + j]) {
-        board[alphabet[column - 1]][row + j]["buffer"].push(shipName);
+        // board[alphabet[column - 1]][row + j]["buffer"].push(shipName);
       }
 
       if (board[alphabet[column + length]][row + j]) {
-        board[alphabet[column + length]][row + j]["buffer"].push(shipName);
+        // board[alphabet[column + length]][row + j]["buffer"].push(shipName);
       }
     }
   }
@@ -88,10 +91,10 @@ export const shipToBoardHorizontal = (column, row, length, board, shipName) => {
   for (let i = 0; i < length; i++) {
     board[alphabet[column]][row]["ship"] = shipName;
     if (board[alphabet[column]][row - 1]) {
-      board[alphabet[column]][row - 1]["buffer"].push(shipName);
+      // board[alphabet[column]][row - 1]["buffer"].push(shipName);
     }
     if (board[alphabet[column]][row + 1]) {
-      board[alphabet[column]][row + 1]["buffer"].push(shipName);
+      // board[alphabet[column]][row + 1]["buffer"].push(shipName);
     }
     column += 1;
   }
@@ -102,17 +105,17 @@ export const removeHorizontalShip = (column, row, length, board, shipName) => {
   for (let j = -1; j < 2; j++) {
     if (column - 1 >= 0 && column + j < 9) {
       if (board[alphabet[column - 1]][row + j]) {
-        board[alphabet[column - 1]][row + j]["buffer"] = removeFromArray(
-          board[alphabet[column - 1]][row + j]["buffer"],
-          shipName
-        );
+        // board[alphabet[column - 1]][row + j]["buffer"] = removeFromArray(
+        //   board[alphabet[column - 1]][row + j]["buffer"],
+        //   shipName
+        // );
       }
 
       if (column + length < 10 && board[alphabet[column + length]][row + j]) {
-        board[alphabet[column + length]][row + j]["buffer"] = removeFromArray(
-          board[alphabet[column + length]][row + j]["buffer"],
-          shipName
-        );
+        // board[alphabet[column + length]][row + j]["buffer"] = removeFromArray(
+        //   board[alphabet[column + length]][row + j]["buffer"],
+        //   shipName
+        // );
       }
     }
   }
@@ -121,16 +124,16 @@ export const removeHorizontalShip = (column, row, length, board, shipName) => {
   for (let i = 0; i < length; i++) {
     board[alphabet[column]][row]["ship"] = false;
     if (board[alphabet[column]][row - 1]) {
-      board[alphabet[column]][row - 1]["buffer"] = removeFromArray(
-        board[alphabet[column]][row - 1]["buffer"],
-        shipName
-      );
+      // board[alphabet[column]][row - 1]["buffer"] = removeFromArray(
+      //   board[alphabet[column]][row - 1]["buffer"],
+      //   shipName
+      // );
     }
     if (board[alphabet[column]][row + 1]) {
-      board[alphabet[column]][row + 1]["buffer"] = removeFromArray(
-        board[alphabet[column]][row + 1]["buffer"],
-        shipName
-      );
+      // board[alphabet[column]][row + 1]["buffer"] = removeFromArray(
+      //   board[alphabet[column]][row + 1]["buffer"],
+      //   shipName
+      // );
     }
     column += 1;
   }

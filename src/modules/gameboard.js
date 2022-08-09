@@ -68,7 +68,7 @@ export const gameboard = () => {
         );
       }
       if (freeSpace) {
-        shipToBoardVertical(column, index, shipLength, board, shipName);
+        board = shipToBoardVertical(column, index, shipLength, board, shipName);
       }
     } else if (orientation === "horizontal") {
       let index = alphabet.findIndex((i) => i === column);

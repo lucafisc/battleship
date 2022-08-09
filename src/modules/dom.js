@@ -1,6 +1,7 @@
 import { alphabet } from "./board-factory";
 import { player } from "./players";
 import { pubsub } from "./pubsub.js";
+let existingCoordinates;
 
 pubsub.subscribe("render-board", (which) => {
   removeBoard(which);
@@ -26,17 +27,17 @@ const renderBoard = (player) => {
         cell.classList.add("my-ship");
         cell.draggable = true;
         cell.addEventListener("mouseup", (event) => {
-          console.log("fired");
           let coordinates = event.target.dataset;
           pubsub.publish("rotate-ship", coordinates);
         });
         cell.addEventListener("dragstart", (event) => {
-          console.log("dragstart");
-          event.target.classList.add("dragged");
+          console.log("drag start");
+          existingCoordinates = event.target.dataset;
+          // event.target.classList.add("dragged");
         });
         cell.addEventListener("dragend", (event) => {
-          console.log("dragend");
-          event.target.classList.remove("dragged");
+          console.log("drag end");
+          // event.target.classList.remove("dragged");
         });
       }
 
@@ -59,10 +60,11 @@ const renderBoard = (player) => {
       //check for empty cells
       if (board[alphabet[j]][i]["ship"] === false) {
         cell.addEventListener("dragenter", (e) => {
-          let coordinates = document.querySelector(".dragged").dataset;
-          console.log(coordinates);
-          let newCoordinates = e.target.dataset;
-          let data = { coordinates, newCoordinates };
+          // const coordinates = document.querySelector(".dragged")?.dataset;
+          const newCoordinates = e.target.dataset;
+          console.log({ existingCoordinates, newCoordinates });
+
+          const data = { existingCoordinates, newCoordinates };
           pubsub.publish("dragged", data);
         });
       }
