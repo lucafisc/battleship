@@ -10,41 +10,42 @@
 
 <body>
     <nav class="nav">
-        <h1>Battleship</h1>
+        <h1 class="nav-title">battleship</h1>
     </nav>
-    <div class="game-container">
-        <div id="player-container" class="dashboard">
-            <div class="board-title-container">
-                <h1 class="subtitle">your board</h1>
-            </div>
-            <div id="human-board" class="board-container"></div>
-            <div class="buttons-container">
-                <div class="refresh-container">
+    <main>
+        <div class="game-container">
+            <div id="player-container" class="dashboard">
+                <div class="board-title-container">
+                    <h1 class="board-title">your board</h1>
                 </div>
-                <div class="confirm-container"></div>
-            </div>
-            <div class="fleet-title-container">
-                <h1 class="subtitle">your fleet</h1>
+                <div id="human-board" class="board-container"></div>
+                <div class="buttons-container">
+                    <div class="refresh-container">
+                    </div>
+                    <div class="confirm-container"></div>
+                </div>
 
+                <div class="fleet-container">
+                    <h1 class="fleet-title">your fleet</h1>
+
+                </div>
             </div>
-            <div class="fleet-container">
+            <div id="cpu-container" class="dashboard">
+                <div class="board-title-container enemy">
+                    <h1 class="board-title">enemy board</h1>
+
+                </div>
+                <div id="cpu-board" class="board-container"></div>
+                <div class="remaining-container">
+                </div>
+                <div class="fleet-title-container enemy">
+                    <h1 class="subtitle">enemy fleet</h1>
+
+                </div>
+                <div class="fleet-container"></div>
             </div>
         </div>
-        <div id="cpu-container" class="dashboard">
-            <div class="board-title-container enemy">
-                <h1 class="subtitle">enemy board</h1>
-
-            </div>
-            <div id="cpu-board" class="board-container"></div>
-            <div class="remaining-container">
-            </div>
-            <div class="fleet-title-container enemy">
-                <h1 class="subtitle">enemy fleet</h1>
-
-            </div>
-            <div class="fleet-container"></div>
-        </div>
-    </div>
+    </main>
 </body>
 
 </html>

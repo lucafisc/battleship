@@ -6,15 +6,7 @@ import { pubsub } from "./modules/pubsub.js";
 import { domElements } from "./modules/dom-others";
 import "./styles/main.css";
 import "./styles/board.css";
-
-// function init() {
-//   loadInterface();
-//   pubsub.publish("random-place-ships");
-//   domElements();
-//   gameLoad();
-// }
-
-// init();
+import "./styles/content.css";
 
 function init() {
   loadInterface();

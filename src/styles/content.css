@@ -1,0 +1,133 @@
+.nav {
+    background-color: var(--white-bg);
+    font-weight: 500;
+    height: 150px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-title {
+    color: var(--off-black);
+    font-size: 2rem;
+}
+
+
+.game-container {
+    background-color: var(--light-blue-bg);
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7%;
+    padding: 0 7%;
+    margin-bottom: 50px;
+}
+
+
+.board-title-container,
+.fleet-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+}
+
+.board-title {
+    font-size: 1.4rem;
+    ;
+    color: var(--main-blue);
+}
+
+.board-container {
+    aspect-ratio: 1;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    transition: all 0.3s ease-out;
+    /* margin: 0 100px; */
+}
+
+.not-turn {
+    transform: scale(0.95) !important;
+    background-color: var(--off-gray) !important;
+}
+
+
+.buttons-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--default-margin);
+}
+
+.refresh-container,
+.confirm-container,
+.remaining-container {
+    height: 50px;
+    margin-top: var(--default-margin);
+    border-radius: var(--default-radius);
+}
+
+.refresh-container,
+.confirm-container {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-out;
+}
+
+.refresh-container:active,
+.confirm-container:active {
+    transform: scale(0.95);
+}
+
+.refresh-container {
+    background-color: var(--yellow);
+}
+
+.confirm-container {
+    background-color: var(--green);
+}
+
+.disabled {
+    cursor: not-allowed;
+    background-color: var(--off-gray);
+}
+
+.button {
+    height: 2rem;
+    transition: transform 0.2s ease-out;
+    cursor: pointer;
+}
+
+.refresh-container:hover>.button,
+.confirm-container:hover>.button {
+    transform: scale(1.1);
+}
+
+.disabled:hover>.button {
+    transform: scale(1) !important;
+    cursor: not-allowed;
+}
+
+.remaining-container {
+    background-color: var(--off-gray);
+}
+
+
+.fleet-container {
+    height: 100px;
+}
+
+@media only screen and (max-width: 700px) {
+    .game-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    body {
+        padding: 10px;
+    }
+}

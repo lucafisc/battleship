@@ -7,15 +7,34 @@
 }
 
 
+
 .cell {
     flex: 1;
     aspect-ratio: 1;
     cursor: pointer;
     background-color: transparent;
-    background-color: var(--off-gray);
+    border: 1px solid var(--dark-blue-bg);
     transition: all 0.2s ease-out;
-    margin: 2px;
 }
+
+.gameboard div:nth-child(-n+10) {
+    border-top: 2px solid var(--dark-blue-bg);
+}
+
+.gameboard div:nth-child(10n + 1) {
+    border-left: 2px solid var(--dark-blue-bg);
+}
+
+.gameboard div:nth-child(10n) {
+    border-right: 2px solid var(--dark-blue-bg);
+}
+
+.gameboard div:nth-last-child(-n+10) {
+    border-bottom: 2px solid var(--dark-blue-bg);
+}
+
+
+
 
 #cpu-board:not(.not-turn)>.gameboard>.board-row>.cell:hover {
     background-color: var(--yellow);
