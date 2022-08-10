@@ -1,10 +1,10 @@
 import { pubsub } from "./pubsub.js";
 import { gameboard, sucessPlacingShip } from "./gameboard-storage.js";
 import { player } from "./player-factory";
-import { alphabet } from "./gameboard-factory";
-
+import { newShip } from "./ship-factory";
 let human;
 let cpu;
+const shipsArray = [5, 4, 3, 3, 2];
 
 export const playersStorage = () => {
   return [human, cpu];
@@ -13,8 +13,47 @@ export const playersStorage = () => {
 export const newGame = () => {
   human = player("human");
   cpu = player("cpu");
+  const players = playersStorage();
+  players.forEach(createShips);
+
   // console.log(human.getBoardObject().getBoardStorage());
   pubsub.publish("render-boards");
+};
+
+const createShips = (player) => {
+  const boardObject = player.getBoardObject();
+  for (let i = 0; i < shipsArray.length; i++) {
+    let props = randomPlace(boardObject, shipsArray[i]);
+    console.log(props);
+    // let ship = newShip(props.length, props.cell, props.direction);
+  }
+};
+
+const randomPlace = (boardObject, length) => {
+  let cell;
+  let direction;
+  let board = boardObject.getBoardStorage();
+  console.log(board);
+  do {
+    cell = randomNumber(100);
+    direction = randomNumber(2);
+  } while (freeSpace(cell, direction) === false);
+
+  return { length, cell, direction };
+};
+
+const randomNumber = (range) => {
+  return Math.floor(Math.random() * range);
+};
+
+const freeSpace = (cell, direction) => {
+  return true;
+};
+
+const gameRound = () => {
+  //event listener changes ship
+  //board loops trhoug ships array and updates board array
+  //render dom
 };
 
 // const shipsArray = [

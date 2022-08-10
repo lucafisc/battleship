@@ -1,4 +1,3 @@
-import { ship } from "./ship";
 import {
   shipToBoardVertical,
   removeVerticalShip,
@@ -14,6 +13,8 @@ import { pubsub } from "./pubsub";
 export const gameBoard = () => {
   let boardStorage = newBoardStorage();
   const getBoardStorage = () => boardStorage;
+  //ships array
+  //for each ship...
 
   return {
     getBoardStorage,

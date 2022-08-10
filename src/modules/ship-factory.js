@@ -1,4 +1,36 @@
-// import { alphabet } from "./board-factory";
+export const newShip = (name, cell, direction) => {
+  const length = getShipLength(name);
+  let whereHit = new Array(length).fill(false);
+  const hit = (n) => {
+    whereHit.fill(true, n, n + 1);
+  };
+  const isSunk = () => whereHit.every((position) => position === true);
+
+  getInfo = () => {
+    name, cell, direction;
+  };
+
+  return {
+    hit,
+    isSunk,
+    getInfo,
+  };
+};
+
+function getShipLength(name) {
+  switch (name) {
+    case "carrier":
+      return 5;
+    case "battleship":
+      return 4;
+    case "destroyer":
+      return 3;
+    case "submarine":
+      return 3;
+    case "patrol boat":
+      return 2;
+  }
+}
 
 // export const ship = (name, column, row) => {
 //   let orientation;
@@ -55,18 +87,3 @@
 //     getHit,
 //   };
 // };
-
-// function lengthByName(name) {
-//   switch (name) {
-//     case "carrier":
-//       return 5;
-//     case "battleship":
-//       return 4;
-//     case "destroyer":
-//       return 3;
-//     case "submarine":
-//       return 3;
-//     case "patrol boat":
-//       return 2;
-//   }
-// }
