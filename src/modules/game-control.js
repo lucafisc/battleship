@@ -51,9 +51,15 @@ const freeSpace = (props, board) => {
 
   //horizontal
   if (props.direction === 0) {
-    if (isShipTooLongHor(props)) {
+    if (isShipTooLongH(props)) {
       freeSpace = false;
-    } else if (isThereShipHor(props, board)) {
+    } else if (isThereShipH(props, board)) {
+      freeSpace = false;
+    }
+  } else {
+    if (isShipTooLongV(props)) {
+      freeSpace = false;
+    } else if (isThereShipV(props, board)) {
       freeSpace = false;
     }
   }
@@ -67,7 +73,7 @@ const gameRound = () => {
   //render dom
 };
 
-function isShipTooLongHor(props) {
+function isShipTooLongH(props) {
   const lastCellDigitStr = String(props.cell).slice(-1);
   const lastCellDigitNum = Number(lastCellDigitStr);
   if (lastCellDigitNum + props.length > 9) {
@@ -77,13 +83,34 @@ function isShipTooLongHor(props) {
   }
 }
 
-function isThereShipHor(props, board) {
+function isShipTooLongV(props) {
+  const lastCell = (props.length - 1) * 10 + props.cell;
+  if (lastCell >= 100) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isThereShipH(props, board) {
   let isThereShip = false;
 
   for (let i = 0; i < props.length; i++) {
     if (board[props.cell + i] !== "water") {
       isThereShip = true;
     }
+  }
+  return isThereShip;
+}
+
+function isThereShipV(props, board) {
+  let isThereShip = false;
+  let shipCell = props.cell;
+  for (let i = 0; i < props.length; i++) {
+    if (board[shipCell] !== "water") {
+      isThereShip = true;
+    }
+    shipCell += 10;
   }
   return isThereShip;
 }
