@@ -48,7 +48,8 @@
     transform: scale(0.9);
 }
 
-#cpu-board:not(.not-turn)>.gameboard>.water:hover::after {
+#cpu-board:not(.not-turn)>.gameboard>.water:hover::after,
+#cpu-board:not(.not-turn)>.gameboard>.ship:hover::after {
     color: var(--dark-blue-bg);
     content: "\f111";
 }
@@ -62,7 +63,7 @@
     background-color: var(--dark-blue-bg);
 }
 
-.ship {
+#human-board>.gameboard>.ship {
     background-color: var(--main-blue);
     border-color: var(--main-blue);
 }
@@ -83,6 +84,21 @@
     content: "\f111";
 }
 
-#human-board>.gameboard>.board-row>.cell {
+#human-board>.gameboard>.cell {
     cursor: default !important;
+}
+
+
+
+.not-turn {
+    transform: scale(0.95) !important;
+}
+
+.not-turn>.gameboard>.cell {
+    border-color: var(--dark-blue-bg)
+}
+
+#human-board.not-turn>.gameboard>.ship {
+    background-color: var(--dark-blue-bg);
+    border-color: var(--dark-blue-bg);
 }

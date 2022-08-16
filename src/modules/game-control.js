@@ -2,6 +2,7 @@ import { pubsub } from "./pubsub.js";
 import { gameboard, sucessPlacingShip } from "./gameboard-storage.js";
 import { player } from "./player-factory";
 import { newShip } from "./ship-factory";
+import { freeSpace } from "./check-free-space";
 let human;
 let cpu;
 const shipsArray = [5, 4, 3, 3, 2, 2, 1, 1];
@@ -15,9 +16,8 @@ export const newGame = () => {
   cpu = player("cpu");
   const players = playersStorage();
   players.forEach(createShips);
-
-  // console.log(human.getBoardObject().getBoardStorage());
   pubsub.publish("render-boards");
+  pubsub.publish("new-current-player", "cpu");
 };
 
 const createShips = (player) => {
@@ -26,8 +26,6 @@ const createShips = (player) => {
     let props = randomPlace(boardObject, shipsArray[i]);
     let ship = newShip(props);
     boardObject.addToShipArray(ship);
-    //remove
-    pubsub.publish("render-boards");
   }
 };
 
@@ -49,252 +47,18 @@ const randomNumber = (range) => {
   return Math.floor(Math.random() * range);
 };
 
-const freeSpace = (props, board) => {
-  let freeSpace = true;
-
-  //horizontal
-  if (props.direction === 0) {
-    if (isShipTooLongH(props)) {
-      freeSpace = false;
-    } else if (isThereShipH(props, board)) {
-      freeSpace = false;
-    } else if (isThereShipAroundH(props, board)) {
-      freeSpace = false;
-    } else if (isThereShipOnEdgesH(props, board)) {
-      freeSpace = false;
-    }
-  } else {
-    if (isShipTooLongV(props)) {
-      freeSpace = false;
-    } else if (isThereShipV(props, board)) {
-      freeSpace = false;
-    } else if (isThereShipAroundV(props, board)) {
-      freeSpace = false;
-    } else if (isThereShipOnEdgesV(props, board)) {
-      freeSpace = false;
-    }
-  }
-
-  return freeSpace;
-};
+//start game
+pubsub.subscribe("game-start", () => {
+  let whoseTurn = "human";
+  console.log("hello");
+  pubsub.publish("new-current-player", whoseTurn);
+});
 
 const gameRound = () => {
   //event listener changes ship
   //board loops trhoug ships array and updates board array
   //render dom
 };
-
-function isShipTooLongH(props) {
-  const lastCellDigitStr = String(props.cell).slice(-1);
-  const lastCellDigitNum = Number(lastCellDigitStr);
-  if (lastCellDigitNum + props.length > 9) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function isShipTooLongV(props) {
-  const lastCell = (props.length - 1) * 10 + props.cell;
-  if (lastCell >= 100) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function isThereShipH(props, board) {
-  let isThereShip = false;
-
-  for (let i = 0; i < props.length; i++) {
-    if (board[props.cell + i] !== "water") {
-      isThereShip = true;
-    }
-  }
-  return isThereShip;
-}
-
-function isThereShipV(props, board) {
-  let isThereShip = false;
-  let shipCell = props.cell;
-  for (let i = 0; i < props.length; i++) {
-    if (board[shipCell] !== "water") {
-      isThereShip = true;
-    }
-    shipCell += 10;
-  }
-  return isThereShip;
-}
-
-function isThereShipAroundV(props, board) {
-  let isThereShip = false;
-  let shipCell = props.cell;
-  const lastCellDigitStr = String(shipCell).slice(-1);
-  const lastCellDigitNum = Number(lastCellDigitStr);
-
-  for (let i = 0; i < props.length; i++) {
-    if (lastCellDigitNum > 0) {
-      if (board[shipCell - 1] !== "water") {
-        isThereShip = true;
-      }
-    }
-    if (lastCellDigitNum < 9) {
-      if (board[shipCell + 1] !== "water") {
-        isThereShip = true;
-      }
-    }
-
-    shipCell += 10;
-  }
-  return isThereShip;
-}
-
-function isThereShipAroundH(props, board) {
-  let isThereShip = false;
-
-  for (let i = 0; i < props.length; i++) {
-    if (props.cell >= 10) {
-      if (board[props.cell + i - 10] !== "water") {
-        isThereShip = true;
-      }
-    }
-    if (props.cell < 90) {
-      if (board[props.cell + i + 10] !== "water") {
-        isThereShip = true;
-      }
-    }
-  }
-  return isThereShip;
-}
-
-function isThereShipOnEdgesH(props, board) {
-  let isThereShip = false;
-  let shipCell = props.cell;
-  const lastCellDigitStr = String(shipCell).slice(-1);
-  const lastCellDigitNum = Number(lastCellDigitStr);
-
-  if (lastCellDigitNum > 0) {
-    const modififer = -1;
-    isThereShip = checkEdgesH(props, board, isThereShip, modififer);
-  }
-
-  if (lastCellDigitNum < 9) {
-    const modififer = props.length;
-    isThereShip = checkEdgesH(props, board, isThereShip, modififer);
-  }
-
-  return isThereShip;
-}
-
-function checkEdgesH(props, board, isThereShip, j) {
-  if (props.cell >= 10) {
-    if (board[props.cell + j - 10] !== "water") {
-      isThereShip = true;
-    }
-  }
-  if (board[props.cell + j] !== "water") {
-    isThereShip = true;
-  }
-  if (props.cell < 90) {
-    if (board[props.cell + j + 10] !== "water") {
-      isThereShip = true;
-    }
-  }
-  return isThereShip;
-}
-
-function isThereShipOnEdgesV(props, board) {
-  let isThereShip = false;
-  let shipCell = props.cell;
-  const lastCellDigitStr = String(shipCell).slice(-1);
-  const lastCellDigitNum = Number(lastCellDigitStr);
-
-  if (props.cell >= 10) {
-    const modififer = -10;
-    isThereShip = checkEdgesV(
-      lastCellDigitNum,
-      board,
-      props,
-      isThereShip,
-      modififer
-    );
-  }
-
-  if (props.cell < 90) {
-    const modififer = props.length * 10;
-    isThereShip = checkEdgesV(
-      lastCellDigitNum,
-      board,
-      props,
-      isThereShip,
-      modififer
-    );
-  }
-
-  return isThereShip;
-}
-
-function checkEdgesV(lastCellDigitNum, board, props, isThereShip, j) {
-  if (lastCellDigitNum > 0) {
-    if (board[props.cell - 1 + j] !== "water") {
-      isThereShip = true;
-    }
-  }
-  if (board[props.cell - 10] !== "water") {
-    isThereShip = true;
-  }
-  if (lastCellDigitNum < 9) {
-    if (board[props.cell + 1 + j] !== "water") {
-      isThereShip = true;
-    }
-  }
-  return isThereShip;
-}
-// const shipsArray = [
-//   "carrier",
-//   "battleship",
-//   "destroyer",
-//   "submarine",
-//   "patrol boat",
-// ];
-
-// export const gameControl = () => {};
-
-// //random place ships
-// pubsub.subscribe("random-place-ships", () => {
-//   shipsArray.forEach(placeRandomly);
-//   pubsub.publish("render-board", human);
-//   pubsub.publish("render-board", cpu);
-// });
-// const placeRandomly = (item) => {
-//   let placed;
-//   do {
-//     placed = wasShipPlaced(placed, item, myBoard);
-//   } while (placed !== true);
-
-//   do {
-//     placed = wasShipPlaced(placed, item, enemyBoard);
-//   } while (placed !== true);
-// };
-// const wasShipPlaced = (placed, item, board) => {
-//   placed = false;
-//   let row = Math.floor(Math.random() * 10);
-//   let column = Math.floor(Math.random() * 10);
-//   let orientation = Math.round(Math.random());
-//   if (orientation === 0) {
-//     orientation = "vertical";
-//   } else {
-//     orientation = "horizontal";
-//   }
-//   placed = board.placeShip(orientation, item, alphabet[column], row);
-//   return placed;
-// };
-
-// //start game
-// pubsub.subscribe("game-start", () => {
-//   let whoseTurn = "human";
-//   pubsub.publish("new-current-player", whoseTurn);
-// });
 
 // //rotate ship
 // pubsub.subscribe("rotate-ship", (coordinates) => {

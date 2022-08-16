@@ -1,13 +1,13 @@
 import { pubsub } from "./pubsub.js";
-
+import { newGame } from "./game-control.js";
 export const domElements = () => {
   //event listeners
-  const refreshBtn = document.querySelector(".refresh-container");
+  const refreshBtn = document.querySelector(".refresh");
   refreshBtn.addEventListener("mouseup", (event) => {
-    pubsub.publish("random-place-ships");
+    newGame();
   });
 
-  const confirmBtn = document.querySelector(".confirm-container");
+  const confirmBtn = document.querySelector(".confirm");
   confirmBtn.addEventListener("mouseup", (event) => {
     pubsub.publish("game-start");
   });

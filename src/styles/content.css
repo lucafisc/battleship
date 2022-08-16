@@ -63,11 +63,6 @@
     margin-bottom: 45px;
 }
 
-.not-turn {
-    transform: scale(0.95) !important;
-    background-color: var(--off-gray) !important;
-}
-
 .fleet-container {
     display: flex;
     flex-direction: column;
@@ -129,20 +124,19 @@
     content: "\f04b";
 }
 
-.disabled {
+.disabled,
+.disabled:hover::before {
     cursor: not-allowed;
-    background-color: var(--off-gray);
+    color: var(--dark-blue-bg) !important;
 }
+
 
 .refresh-container:hover>.refresh::before,
 .confirm-container:hover>.confirm::before {
     color: var(--main-blue);
 }
 
-.disabled:hover>.button {
-    transform: scale(1) !important;
-    cursor: not-allowed;
-}
+
 
 
 

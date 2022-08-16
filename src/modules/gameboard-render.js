@@ -13,9 +13,9 @@ const renderBoard = (player) => {
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
+
   let boardContainer = makeBoardContainer();
   boardContainer = addCells(player, boardContainer);
-
   container.append(boardContainer);
 };
 
@@ -43,17 +43,23 @@ const makeBoardContainer = () => {
 
 const addCells = (player, container) => {
   const boardStorage = player.getBoardObject().getBoardStorage();
+  const isHuman = player.isPlayerHuman();
   for (let i = 0; i < boardStorage.length; i++) {
-    const cell = makeCell(i, boardStorage[i]);
+    const cell = makeCell(i, boardStorage[i], isHuman);
     container.append(cell);
   }
   return container;
 };
 
-const makeCell = (i, color) => {
+const makeCell = (i, color, human) => {
   const cell = document.createElement("div");
   cell.classList.add("cell", color);
   cell.dataset.number = i;
+  if (human === false) {
+    cell.addEventListener("click", (e) => {
+      pubsub.publish("new-player-move", e.target);
+    });
+  }
   return cell;
 };
 
