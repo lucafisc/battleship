@@ -24,30 +24,41 @@ const createShips = (player) => {
   const boardObject = player.getBoardObject();
   for (let i = 0; i < shipsArray.length; i++) {
     let props = randomPlace(boardObject, shipsArray[i]);
-    console.log(props);
     // let ship = newShip(props.length, props.cell, props.direction);
   }
 };
 
 const randomPlace = (boardObject, length) => {
+  let props;
   let cell;
   let direction;
   let board = boardObject.getBoardStorage();
-  console.log(board);
   do {
     cell = randomNumber(100);
     direction = randomNumber(2);
-  } while (freeSpace(cell, direction) === false);
+    props = { length, cell, direction };
+  } while (freeSpace(props, board) === false);
 
-  return { length, cell, direction };
+  return props;
 };
 
 const randomNumber = (range) => {
   return Math.floor(Math.random() * range);
 };
 
-const freeSpace = (cell, direction) => {
-  return true;
+const freeSpace = (props, board) => {
+  let freeSpace = true;
+
+  //horizontal
+  if (props.direction === 0) {
+    if (isShipTooLongHor(props)) {
+      freeSpace = false;
+    } else if (isThereShipHor(props, board)) {
+      freeSpace = false;
+    }
+  }
+
+  return freeSpace;
 };
 
 const gameRound = () => {
@@ -56,6 +67,26 @@ const gameRound = () => {
   //render dom
 };
 
+function isShipTooLongHor(props) {
+  const lastCellDigitStr = String(props.cell).slice(-1);
+  const lastCellDigitNum = Number(lastCellDigitStr);
+  if (lastCellDigitNum + props.length > 9) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isThereShipHor(props, board) {
+  let isThereShip = false;
+
+  for (let i = 0; i < props.length; i++) {
+    if (board[props.cell + i] !== "water") {
+      isThereShip = true;
+    }
+  }
+  return isThereShip;
+}
 // const shipsArray = [
 //   "carrier",
 //   "battleship",
