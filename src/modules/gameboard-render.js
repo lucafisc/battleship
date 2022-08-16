@@ -57,7 +57,9 @@ const makeCell = (i, color, human) => {
   cell.dataset.number = i;
   if (human === false && (color === "water" || color === "ship")) {
     cell.addEventListener("click", (e) => {
-      pubsub.publish("new-player-move", e.target);
+      if (!e.target.parentNode.parentNode.classList.contains("not-turn")) {
+        pubsub.publish("new-player-move", e.target);
+      }
     });
   }
   return cell;
