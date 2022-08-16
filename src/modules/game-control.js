@@ -24,7 +24,10 @@ const createShips = (player) => {
   const boardObject = player.getBoardObject();
   for (let i = 0; i < shipsArray.length; i++) {
     let props = randomPlace(boardObject, shipsArray[i]);
-    // let ship = newShip(props.length, props.cell, props.direction);
+    let ship = newShip(props);
+    boardObject.addToShipArray(ship);
+    //remove
+    pubsub.publish("render-boards");
   }
 };
 

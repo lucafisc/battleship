@@ -1,13 +1,11 @@
-export const newShip = (length, cell, direction) => {
-  let whereHit = new Array(length).fill(false);
+export const newShip = (props) => {
+  let whereHit = new Array(props.length).fill(false);
   const hit = (n) => {
     whereHit.fill(true, n, n + 1);
   };
   const isSunk = () => whereHit.every((position) => position === true);
 
-  getInfo = () => {
-    length, cell, direction;
-  };
+  const getInfo = () => props;
 
   return {
     hit,

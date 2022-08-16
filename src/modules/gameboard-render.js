@@ -10,6 +10,9 @@ const getPlayers = () => {
 
 const renderBoard = (player) => {
   const container = getDOMContainer(player);
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
   let boardContainer = makeBoardContainer();
   boardContainer = addCells(player, boardContainer);
 

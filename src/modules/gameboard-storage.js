@@ -13,13 +13,44 @@ import { pubsub } from "./pubsub";
 export const gameBoard = () => {
   let boardStorage = newBoardStorage();
   const getBoardStorage = () => boardStorage;
-  //ships array
-  //for each ship...
+  let ships = [];
+  const addToShipArray = (ship) => {
+    ships.push(ship);
+    ships.forEach(updateBoard);
+  };
+
+  const updateBoard = (ship) => {
+    const props = ship.getInfo();
+    if (props.direction === 0) {
+      boardStorage = placeShipH(props, boardStorage);
+    } else {
+      boardStorage = placeShipV(props, boardStorage);
+    }
+  };
 
   return {
     getBoardStorage,
+    addToShipArray,
   };
 };
+
+function placeShipH(props, board) {
+  let position;
+  for (let i = 0; i < props.length; i++) {
+    position = props.cell + i;
+    board[position] = "ship";
+  }
+  return board;
+}
+
+function placeShipV(props, board) {
+  let position = props.cell;
+  for (let i = 0; i < props.length; i++) {
+    board[position] = "ship";
+    position += 10;
+  }
+  return board;
+}
 
 // export const gameboard = () => {
 //   let board = newBoard();
