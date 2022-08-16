@@ -1,16 +1,35 @@
 export const newShip = (props) => {
-  let whereHit = new Array(props.length).fill(false);
-  const hit = (n) => {
-    whereHit.fill(true, n, n + 1);
-  };
-  const isSunk = () => whereHit.every((position) => position === true);
+  let shipCells = new Array(props.length).fill([]);
 
-  const getInfo = () => props;
+  if (props.direction === 0) {
+    let position = props.cell;
+    for (let i = 0; i < shipCells.length; i++) {
+      shipCells[i] = { position };
+      shipCells[i].ship = "ship";
+      position += 1;
+    }
+  } else if (props.direction === 1) {
+    let position = props.cell;
+    for (let i = 0; i < props.length; i++) {
+      shipCells[i] = { position };
+      shipCells[i].ship = "ship";
+      position += 10;
+    }
+  }
+
+  const hit = (n) => {
+    shipCells.fill(true, n, n + 1);
+  };
+  const isSunk = () => shipCells.every((position) => position !== "ship");
+
+  const getCells = () => {
+    return shipCells;
+  };
 
   return {
     hit,
     isSunk,
-    getInfo,
+    getCells,
   };
 };
 

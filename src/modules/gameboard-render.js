@@ -55,7 +55,7 @@ const makeCell = (i, color, human) => {
   const cell = document.createElement("div");
   cell.classList.add("cell", color);
   cell.dataset.number = i;
-  if (human === false) {
+  if (human === false && (color === "water" || color === "ship")) {
     cell.addEventListener("click", (e) => {
       pubsub.publish("new-player-move", e.target);
     });

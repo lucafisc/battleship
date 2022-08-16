@@ -54,6 +54,10 @@ pubsub.subscribe("game-start", () => {
   pubsub.publish("new-current-player", whoseTurn);
 });
 
+//new player move
+pubsub.subscribe("new-player-move", (cell) => {
+  console.log(cell);
+});
 const gameRound = () => {
   //event listener changes ship
   //board loops trhoug ships array and updates board array

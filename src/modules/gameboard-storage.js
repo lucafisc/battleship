@@ -20,11 +20,9 @@ export const gameBoard = () => {
   };
 
   const updateBoard = (ship) => {
-    const props = ship.getInfo();
-    if (props.direction === 0) {
-      boardStorage = placeShipH(props, boardStorage);
-    } else {
-      boardStorage = placeShipV(props, boardStorage);
+    const cells = ship.getCells();
+    for (let i = 0; i < cells.length; i++) {
+      boardStorage[cells[i].position] = cells[i].ship;
     }
   };
 
