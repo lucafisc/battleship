@@ -3,8 +3,11 @@ export const newShip = (props) => {
 
   const hit = (n) => {
     shipCells[n].ship = "hit";
+    if (isSunk()) {
+      shipCells.forEach(sink);
+    }
   };
-  const isSunk = () => shipCells.every((position) => position !== "ship");
+  const isSunk = () => shipCells.every(checkShips);
 
   const getCells = () => {
     return shipCells;
@@ -16,6 +19,14 @@ export const newShip = (props) => {
     getCells,
   };
 };
+
+function checkShips(n) {
+  return n.ship === "hit";
+}
+
+function sink(n) {
+  n.ship = "sunk";
+}
 
 function defineCells(props) {
   let array = new Array(props.length).fill([]);

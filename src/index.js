@@ -12,7 +12,6 @@ import "@fortawesome/fontawesome-free/css/all.css";
 function init() {
   loadInterface();
   domElements();
-
   newGame();
 }
 
