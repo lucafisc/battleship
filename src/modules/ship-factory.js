@@ -1,21 +1,5 @@
 export const newShip = (props) => {
-  let shipCells = new Array(props.length).fill([]);
-
-  if (props.direction === 0) {
-    let position = props.cell;
-    for (let i = 0; i < shipCells.length; i++) {
-      shipCells[i] = { position };
-      shipCells[i].ship = "ship";
-      position += 1;
-    }
-  } else if (props.direction === 1) {
-    let position = props.cell;
-    for (let i = 0; i < props.length; i++) {
-      shipCells[i] = { position };
-      shipCells[i].ship = "ship";
-      position += 10;
-    }
-  }
+  let shipCells = defineCells(props);
 
   const hit = (n) => {
     shipCells.fill(true, n, n + 1);
@@ -33,6 +17,25 @@ export const newShip = (props) => {
   };
 };
 
+function defineCells(props) {
+  let array = new Array(props.length).fill([]);
+  if (props.direction === 0) {
+    let position = props.cell;
+    for (let i = 0; i < array.length; i++) {
+      array[i] = { position };
+      array[i].ship = "ship";
+      position += 1;
+    }
+  } else if (props.direction === 1) {
+    let position = props.cell;
+    for (let i = 0; i < props.length; i++) {
+      array[i] = { position };
+      array[i].ship = "ship";
+      position += 10;
+    }
+  }
+  return array;
+}
 // function getShipLength(name) {
 //   switch (name) {
 //     case "carrier":
