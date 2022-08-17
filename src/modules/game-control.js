@@ -71,6 +71,18 @@ pubsub.subscribe("change-round", () => {
   pubsub.publish("new-current-player", whoseTurn);
 });
 
+//same round
+pubsub.subscribe("same-round", () => {
+  pubsub.publish("render-boards");
+  switch (whoseTurn) {
+    case "human":
+      break;
+    case "cpu":
+      pubsub.publish("cpu-attack");
+      break;
+  }
+});
+
 //human attack
 pubsub.subscribe("human-attack", (cell) => {
   const n = parseInt(cell.getAttribute("data-number"));

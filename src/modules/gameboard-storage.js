@@ -28,14 +28,14 @@ export const gameBoard = () => {
   const getHit = (n) => {
     if (boardStorage[n] === "water") {
       boardStorage[n] = "miss";
+      pubsub.publish("change-round");
     } else {
       const indexes = findShip(ships, n);
-      console.log(indexes);
       const hitShip = ships[indexes.index1];
       hitShip.hit(indexes.index2);
       updateBoard(hitShip);
+      pubsub.publish("same-round");
     }
-    pubsub.publish("change-round");
   };
   return {
     getBoardStorage,
