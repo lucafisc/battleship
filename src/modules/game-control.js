@@ -1,8 +1,8 @@
 import { pubsub } from "./pubsub.js";
-import { gameboard, sucessPlacingShip } from "./gameboard-storage.js";
 import { player } from "./player-factory";
 import { newShip } from "./ship-factory";
 import { freeSpace } from "./check-free-space";
+import { wasAlreadyChosen } from "./gameboard-storage";
 let human;
 let cpu;
 let whoseTurn = "cpu";
@@ -91,7 +91,11 @@ pubsub.subscribe("human-attack", (cell) => {
 
 //cpu attack
 pubsub.subscribe("cpu-attack", () => {
-  const n = randomNumber(99);
+  let n;
+  do {
+    n = randomNumber(99);
+    console.log(n);
+  } while (wasAlreadyChosen(n, human));
   setTimeout(() => {
     human.getBoardObject().getHit(n);
   }, "1000");

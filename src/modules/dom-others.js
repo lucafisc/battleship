@@ -22,13 +22,19 @@ export const domElements = () => {
   pubsub.subscribe("new-current-player", (player) => {
     const humanBoard = document.querySelector("#human-board");
     const cpuBoard = document.querySelector("#cpu-board");
+    const humanTitle = document.querySelector(".human-title");
+    const cpuTitle = document.querySelector(".cpu-title");
     humanBoard.classList.remove("not-turn");
     cpuBoard.classList.remove("not-turn");
+    humanTitle.classList.remove("not-turn");
+    cpuTitle.classList.remove("not-turn");
 
     if (player === "human") {
       humanBoard.classList.add("not-turn");
+      humanTitle.classList.add("not-turn");
     } else {
       cpuBoard.classList.add("not-turn");
+      cpuTitle.classList.add("not-turn");
     }
   });
 };

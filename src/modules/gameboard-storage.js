@@ -59,6 +59,19 @@ function findShip(array1, value) {
   }
 }
 
+export const wasAlreadyChosen = (value, player) => {
+  const board = player.getBoardObject().getBoardStorage();
+  if (
+    board[value] === "hit" ||
+    board[value] === "miss" ||
+    board[value] === "sunk"
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 // export const gameboard = () => {
 //   let board = newBoard();
 //   let ships = [];
