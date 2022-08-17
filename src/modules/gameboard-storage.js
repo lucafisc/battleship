@@ -18,7 +18,6 @@ export const gameBoard = () => {
     ships.push(ship);
     ships.forEach(updateBoard);
   };
-
   const updateBoard = (ship) => {
     const cells = ship.getCells();
     for (let i = 0; i < cells.length; i++) {
@@ -26,28 +25,38 @@ export const gameBoard = () => {
     }
   };
 
+  const getHit = (n) => {
+    if (boardStorage[n] === "water") {
+      boardStorage[n] = "miss";
+    } else {
+      const indexes = findShip(ships, n);
+      console.log(indexes);
+      const hitShip = ships[indexes.index1];
+      hitShip.hit(indexes.index2);
+      updateBoard(hitShip);
+    }
+    pubsub.publish("change-round");
+  };
   return {
     getBoardStorage,
     addToShipArray,
+    getHit,
   };
 };
 
-function placeShipH(props, board) {
-  let position;
-  for (let i = 0; i < props.length; i++) {
-    position = props.cell + i;
-    board[position] = "ship";
+function findShip(array1, value) {
+  let index1;
+  let index2;
+  for (let i = 0; i < array1.length; i++) {
+    let array2 = array1[i].getCells();
+    for (let j = 0; j < array2.length; j++) {
+      if (array2[j].position === value) {
+        index1 = i;
+        index2 = j;
+        return { index1, index2 };
+      }
+    }
   }
-  return board;
-}
-
-function placeShipV(props, board) {
-  let position = props.cell;
-  for (let i = 0; i < props.length; i++) {
-    board[position] = "ship";
-    position += 10;
-  }
-  return board;
 }
 
 // export const gameboard = () => {

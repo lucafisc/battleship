@@ -5,6 +5,8 @@ import { newShip } from "./ship-factory";
 import { freeSpace } from "./check-free-space";
 let human;
 let cpu;
+let whoseTurn = "cpu";
+
 const shipsArray = [5, 4, 3, 3, 2, 2, 1, 1];
 
 export const playersStorage = () => {
@@ -49,81 +51,45 @@ const randomNumber = (range) => {
 
 //start game
 pubsub.subscribe("game-start", () => {
-  let whoseTurn = "human";
   console.log("hello");
+  pubsub.publish("change-round");
+});
+
+//new round
+pubsub.subscribe("change-round", () => {
+  pubsub.publish("render-boards");
+  switch (whoseTurn) {
+    case "human":
+      whoseTurn = "cpu";
+      pubsub.publish("cpu-attack");
+      break;
+    case "cpu":
+      whoseTurn = "human";
+      break;
+  }
+
   pubsub.publish("new-current-player", whoseTurn);
 });
 
-//new player move
-pubsub.subscribe("new-player-move", (cell) => {
-  console.log(cell);
+//human attack
+pubsub.subscribe("human-attack", (cell) => {
+  const n = parseInt(cell.getAttribute("data-number"));
+  cpu.getBoardObject().getHit(n);
 });
+
+//cpu attack
+pubsub.subscribe("cpu-attack", () => {
+  const n = randomNumber(99);
+  setTimeout(() => {
+    human.getBoardObject().getHit(n);
+  }, "1000");
+});
+
 const gameRound = () => {
   //event listener changes ship
   //board loops trhoug ships array and updates board array
   //render dom
 };
-
-// //rotate ship
-// pubsub.subscribe("rotate-ship", (coordinates) => {
-//   coordinates = JSON.parse(JSON.stringify(coordinates));
-
-//   let shipname =
-//     myBoard.getBoard()[coordinates.column][coordinates.row]["ship"];
-//   let ship = myBoard.getShipByName(shipname);
-//   coordinates = ship.getCoordinates();
-//   let orientation = ship.getOrientation();
-//   if (orientation === "vertical") {
-//     orientation = "horizontal";
-//   } else {
-//     orientation = "vertical";
-//   }
-//   myBoard.placeShip(orientation, shipname, coordinates[0], coordinates[1]);
-//   pubsub.publish("render-board", human);
-// });
-
-// //drag ship
-// pubsub.subscribe("dragged", (data) => {
-//   const newData = JSON.parse(JSON.stringify(data));
-
-//   let shipname =
-//     myBoard.getBoard()[newData.existingCoordinates.column][
-//       newData.existingCoordinates.row
-//     ]["ship"];
-
-//   let ship = myBoard.getShipByName(shipname);
-//   console.log({ ship, shipname });
-
-//   let orientation = ship.getOrientation();
-
-//   myBoard.placeShip(
-//     orientation,
-//     shipname,
-//     newData.newCoordinates.column,
-//     newData.newCoordinates.row
-//   );
-//   pubsub.publish("render-board", human);
-// });
-
-// //receive attack
-// pubsub.subscribe("new-player-attack", (coordinates) => {
-//   coordinates = JSON.parse(JSON.stringify(coordinates));
-//   let hitShip = human.attackEnemyBoard(
-//     coordinates.column,
-//     coordinates.row,
-//     cpu
-//   );
-//   pubsub.publish("render-board", human);
-//   pubsub.publish("render-board", cpu);
-//   if (hitShip) {
-//     pubsub.publish("new-current-player", "human");
-//   } else {
-//     pubsub.publish("new-current-player", "cpu");
-//     setTimeout(() => {
-//       pubsub.publish("cpu-round");
-//     }, "1000");
-//   }
-// });
 
 // //cpu round
 // pubsub.subscribe("cpu-round", () => {

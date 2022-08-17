@@ -63,23 +63,26 @@
     background-color: var(--dark-blue-bg);
 }
 
+.sunk::after {
+    color: var(--main-red);
+    content: "\f54c";
+}
+
 #human-board>.gameboard>.ship {
     background-color: var(--main-blue);
     border-color: var(--main-blue);
 }
 
-.ship-hit {
+#human-board>.gameboard>.hit {
     background-color: var(--main-blue);
     border-color: var(--main-blue);
 }
 
-.enemy-hit {
+#cpu-board>.gameboard>.hit {
     background-color: var(--white-bg);
 }
 
-.ship-hit::after,
-.enemy-hit::after,
-.sunk::after {
+.hit::after {
     color: var(--main-red);
     content: "\f111";
 }
@@ -98,7 +101,9 @@
     border-color: var(--dark-blue-bg)
 }
 
-#human-board.not-turn>.gameboard>.ship {
+#human-board.not-turn>.gameboard>.ship,
+#human-board.not-turn>.gameboard>.hit,
+#cpu-board.not-turn>.gameboard>.hit {
     background-color: var(--dark-blue-bg);
     border-color: var(--dark-blue-bg);
 }

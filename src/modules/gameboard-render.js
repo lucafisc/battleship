@@ -62,7 +62,7 @@ const makeCell = (i, color, human) => {
         (e.target.classList.contains("water") ||
           e.target.classList.contains("ship"))
       ) {
-        pubsub.publish("new-player-move", e.target);
+        pubsub.publish("human-attack", e.target);
       }
     });
   }

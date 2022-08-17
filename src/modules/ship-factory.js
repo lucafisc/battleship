@@ -2,7 +2,7 @@ export const newShip = (props) => {
   let shipCells = defineCells(props);
 
   const hit = (n) => {
-    shipCells.fill(true, n, n + 1);
+    shipCells[n].ship = "hit";
   };
   const isSunk = () => shipCells.every((position) => position !== "ship");
 
