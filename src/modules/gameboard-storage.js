@@ -14,6 +14,7 @@ export const gameBoard = () => {
   let boardStorage = newBoardStorage();
   const getBoardStorage = () => boardStorage;
   let ships = [];
+  const getShips = () => ships;
   const addToShipArray = (ship) => {
     ships.push(ship);
     ships.forEach(updateBoard);
@@ -39,6 +40,7 @@ export const gameBoard = () => {
   };
   return {
     getBoardStorage,
+    getShips,
     addToShipArray,
     getHit,
   };

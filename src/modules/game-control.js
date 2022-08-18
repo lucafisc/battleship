@@ -3,6 +3,7 @@ import { player } from "./player-factory";
 import { newShip } from "./ship-factory";
 import { freeSpace } from "./check-free-space";
 import { wasAlreadyChosen } from "./gameboard-storage";
+import { updateFleet } from "./dom-fleet";
 let human;
 let cpu;
 let whoseTurn = "cpu";
@@ -18,6 +19,7 @@ export const newGame = () => {
   cpu = player("cpu");
   const players = playersStorage();
   players.forEach(createShips);
+  players.forEach(updateFleet);
   pubsub.publish("render-boards");
   pubsub.publish("new-current-player", "cpu");
 };
@@ -58,6 +60,8 @@ pubsub.subscribe("game-start", () => {
 //new round
 pubsub.subscribe("change-round", () => {
   pubsub.publish("render-boards");
+  const players = playersStorage();
+  players.forEach(updateFleet);
   switch (whoseTurn) {
     case "human":
       whoseTurn = "cpu";
@@ -74,6 +78,8 @@ pubsub.subscribe("change-round", () => {
 //same round
 pubsub.subscribe("same-round", () => {
   pubsub.publish("render-boards");
+  const players = playersStorage();
+  players.forEach(updateFleet);
   switch (whoseTurn) {
     case "human":
       break;
@@ -100,24 +106,3 @@ pubsub.subscribe("cpu-attack", () => {
     human.getBoardObject().getHit(n);
   }, "1000");
 });
-
-const gameRound = () => {
-  //event listener changes ship
-  //board loops trhoug ships array and updates board array
-  //render dom
-};
-
-// //cpu round
-// pubsub.subscribe("cpu-round", () => {
-//   let hitShip = cpu.randomMoveOn(human);
-//   pubsub.publish("render-board", human);
-//   pubsub.publish("render-board", cpu);
-
-//   if (hitShip) {
-//     setTimeout(() => {
-//       pubsub.publish("cpu-round");
-//     }, "1000");
-//   } else {
-//     pubsub.publish("new-current-player", "human");
-//   }
-// });
