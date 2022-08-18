@@ -7,6 +7,7 @@ import { domElements } from "./modules/dom-others";
 import "./styles/main.css";
 import "./styles/board.css";
 import "./styles/content.css";
+import "./styles/fleet.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "@fortawesome/fontawesome-free/css/all.css";
 function init() {

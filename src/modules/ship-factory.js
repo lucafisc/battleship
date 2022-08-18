@@ -21,7 +21,7 @@ export const newShip = (props) => {
 };
 
 function checkShips(n) {
-  return n.ship === "hit";
+  return n.ship !== "ship";
 }
 
 function sink(n) {
