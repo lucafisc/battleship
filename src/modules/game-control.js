@@ -8,7 +8,7 @@ let human;
 let cpu;
 let whoseTurn = "cpu";
 
-const shipsArray = [5, 4, 3, 3, 2, 2, 1, 1];
+const shipsArray = [5, 3, 4, 3, 2, 1, 2, 1];
 
 export const playersStorage = () => {
   return [human, cpu];
@@ -53,7 +53,6 @@ const randomNumber = (range) => {
 
 //start game
 pubsub.subscribe("game-start", () => {
-  console.log("hello");
   pubsub.publish("change-round");
 });
 
@@ -62,14 +61,9 @@ pubsub.subscribe("change-round", () => {
   pubsub.publish("render-boards");
   const players = playersStorage();
   players.forEach(updateFleet);
-  switch (whoseTurn) {
-    case "human":
-      whoseTurn = "cpu";
-      pubsub.publish("cpu-attack");
-      break;
-    case "cpu":
-      whoseTurn = "human";
-      break;
+  whoseTurn = otherPlayer();
+  if (whoseTurn === "cpu") {
+    pubsub.publish("cpu-attack");
   }
 
   pubsub.publish("new-current-player", whoseTurn);
@@ -80,12 +74,19 @@ pubsub.subscribe("same-round", () => {
   pubsub.publish("render-boards");
   const players = playersStorage();
   players.forEach(updateFleet);
-  switch (whoseTurn) {
-    case "human":
-      break;
-    case "cpu":
-      pubsub.publish("cpu-attack");
-      break;
+  const opponent = otherPlayer();
+  console.log(opponent);
+  console.log(eval(opponent).getBoardObject().areAllSunk());
+  if (eval(opponent).getBoardObject().areAllSunk()) {
+    pubsub.publish("game-over", whoseTurn);
+  } else {
+    switch (whoseTurn) {
+      case "human":
+        break;
+      case "cpu":
+        pubsub.publish("cpu-attack");
+        break;
+    }
   }
 });
 
@@ -99,10 +100,18 @@ pubsub.subscribe("human-attack", (cell) => {
 pubsub.subscribe("cpu-attack", () => {
   let n;
   do {
-    n = randomNumber(99);
-    console.log(n);
+    n = randomNumber(100);
   } while (wasAlreadyChosen(n, human));
   setTimeout(() => {
     human.getBoardObject().getHit(n);
   }, "1000");
 });
+
+const otherPlayer = () => {
+  switch (whoseTurn) {
+    case "human":
+      return "cpu";
+    case "cpu":
+      return "human";
+  }
+};

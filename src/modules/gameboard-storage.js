@@ -38,11 +38,15 @@ export const gameBoard = () => {
       pubsub.publish("same-round");
     }
   };
+
+  const areAllSunk = () => ships.every(checkShips);
+
   return {
     getBoardStorage,
     getShips,
     addToShipArray,
     getHit,
+    areAllSunk,
   };
 };
 
@@ -73,6 +77,10 @@ export const wasAlreadyChosen = (value, player) => {
     return false;
   }
 };
+
+function checkShips(ship) {
+  return ship.isSunk() === true;
+}
 
 // export const gameboard = () => {
 //   let board = newBoard();

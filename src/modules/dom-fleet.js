@@ -22,8 +22,6 @@ const appendShips = (ships, container) => {
   for (let i = 0; i < ships.length; i++) {
     const cells = ships[i].getCells();
     const isSunk = ships[i].isSunk();
-    console.log(cells.length);
-    console.log(isSunk);
     const ship = renderShip(cells.length, isSunk);
 
     container.append(ship);

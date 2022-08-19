@@ -44,10 +44,11 @@
 }
 
 .whole-ship>.cell {
-    height: 90%;
+    height: 1.2em;
     aspect-ratio: 1;
     flex: none;
     border: none;
+    cursor: default;
 }
 
 .whole-ship>.ship {

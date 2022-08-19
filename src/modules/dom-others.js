@@ -37,4 +37,9 @@ export const domElements = () => {
       cpuTitle.classList.add("not-turn");
     }
   });
+
+  //game over
+  pubsub.subscribe("game-over", (whoseTurn) => {
+    console.log(`${whoseTurn} won!`);
+  });
 };
