@@ -1,5 +1,6 @@
 import { pubsub } from "./pubsub.js";
 import { newGame } from "./game-control.js";
+
 export const domElements = () => {
   //event listeners
   const refreshBtn = document.querySelector(".refresh");
@@ -40,6 +41,50 @@ export const domElements = () => {
 
   //game over
   pubsub.subscribe("game-over", (whoseTurn) => {
-    console.log(`${whoseTurn} won!`);
+    const humanBoard = document.querySelector("#human-board");
+    const cpuBoard = document.querySelector("#cpu-board");
+    removeChildren(humanBoard);
+    removeChildren(cpuBoard);
+
+    const message = makeGameOverMsg(whoseTurn);
+    const replayBtn = makeReplayBtn();
+
+    humanBoard.append(message);
+    cpuBoard.append(replayBtn);
   });
+
+  pubsub.subscribe("enable-btns", () => {
+    const btns = document.querySelectorAll(".disabled");
+    btns.forEach((btn) => {
+      btn.classList.remove("disabled");
+    });
+  });
+};
+
+const removeChildren = (parent) => {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+};
+
+const makeGameOverMsg = (whoseTurn) => {
+  const title = document.createElement("h1");
+  title.classList.add("gameover-msg");
+  let text;
+  if (whoseTurn === "human") {
+    text = "you won!";
+  } else {
+    text = "you lost!";
+  }
+  title.textContent = text;
+  return title;
+};
+
+const makeReplayBtn = () => {
+  const btn = document.createElement("div");
+  btn.classList.add("replay-btn");
+  btn.addEventListener("click", (event) => {
+    newGame();
+  });
+  return btn;
 };

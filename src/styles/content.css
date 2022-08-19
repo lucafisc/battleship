@@ -45,10 +45,15 @@
     margin-top: 30px;
 }
 
-.board-title {
+.board-title,
+.gameover-msg {
     font-size: 1.4rem;
     color: var(--main-blue);
     transition: all 0.2 ease-out;
+}
+
+.gameover-msg {
+    font-size: 2rem;
 }
 
 .board-title.not-turn {
@@ -60,10 +65,13 @@
     aspect-ratio: 1;
     display: flex;
     justify-items: center;
+    justify-content: center;
     align-items: center;
     transition: all 0.3s ease-out;
-    /* margin: 0 100px; */
+    border: 1px solid var(--dark-blue-bg);
 }
+
+
 
 #cpu-board {
     margin-bottom: 45px;
@@ -86,12 +94,14 @@
 }
 
 .refresh-container:active,
-.confirm-container:active {
+.confirm-container:active,
+.replay-btn:active {
     transform: scale(0.95);
 }
 
 .refresh::before,
-.confirm::before {
+.confirm::before,
+.replay-btn::before {
     color: var(--dark-blue-bg);
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
@@ -107,6 +117,11 @@
     content: "\f04b";
 }
 
+.replay-btn::before {
+    content: "\f01e";
+    font-size: 2rem;
+}
+
 .disabled,
 .disabled:hover::before {
     cursor: not-allowed;
@@ -115,7 +130,8 @@
 
 
 .refresh-container:hover>.refresh::before,
-.confirm-container:hover>.confirm::before {
+.confirm-container:hover>.confirm::before,
+.replay-btn:hover::before {
     color: var(--main-blue);
 }
 

@@ -6,7 +6,7 @@ import { wasAlreadyChosen } from "./gameboard-storage";
 import { updateFleet } from "./dom-fleet";
 let human;
 let cpu;
-let whoseTurn = "cpu";
+let whoseTurn;
 
 const shipsArray = [5, 3, 4, 3, 2, 1, 2, 1];
 
@@ -15,11 +15,13 @@ export const playersStorage = () => {
 };
 
 export const newGame = () => {
+  whoseTurn = "cpu";
   human = player("human");
   cpu = player("cpu");
   const players = playersStorage();
   players.forEach(createShips);
   players.forEach(updateFleet);
+  pubsub.publish("enable-btns");
   pubsub.publish("render-boards");
   pubsub.publish("new-current-player", "cpu");
 };
@@ -75,8 +77,6 @@ pubsub.subscribe("same-round", () => {
   const players = playersStorage();
   players.forEach(updateFleet);
   const opponent = otherPlayer();
-  console.log(opponent);
-  console.log(eval(opponent).getBoardObject().areAllSunk());
   if (eval(opponent).getBoardObject().areAllSunk()) {
     pubsub.publish("game-over", whoseTurn);
   } else {

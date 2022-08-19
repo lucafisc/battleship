@@ -8,7 +8,6 @@ export const newShip = (props) => {
     }
   };
   const isSunk = () => shipCells.every(checkShips);
-
   const getCells = () => {
     return shipCells;
   };

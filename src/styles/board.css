@@ -14,7 +14,7 @@
     transition: all 0.2s ease-out;
 }
 
-.gameboard div:nth-child(-n+10) {
+/* .gameboard div:nth-child(-n+10) {
     border-top: 2px solid var(--dark-blue-bg);
 }
 
@@ -28,7 +28,7 @@
 
 .gameboard div:nth-last-child(-n+10) {
     border-bottom: 2px solid var(--dark-blue-bg);
-}
+} */
 
 
 
