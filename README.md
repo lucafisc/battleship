@@ -51,7 +51,7 @@ Users should be able to:
 
 
 ### Screenshot
-<img src="https://i.imgur.com/cPRMM8U.gif" alt="drawing" width="500"/>
+<img src="https://media.giphy.com/media/FQZ07sxcNOYe5wKFO8/giphy.gif" alt="drawing" width="500"/>
 
 
 ## Features
